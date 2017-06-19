@@ -1,0 +1,14 @@
+span {
+  display: inline;
+  float: left;
+  white-space: pre;
+  letter-spacing: 2px;
+}
+
+#wrapper {
+  width: 450px;
+}
+
+.typing-text {
+  font-size: 20px;
+}
