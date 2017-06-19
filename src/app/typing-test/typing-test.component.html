@@ -2,8 +2,8 @@
 
 <div class="typing-text">
 <div id="wrapper">
-  <div *ngFor="let char of charsArray">
-      <span id="`character-{{char}}`">{{char}}</span>
+  <div *ngFor="let char of charsArray; let index = index">
+      <span [class.successHighlight]="index == 0" id="`character-{{char}}`">{{char}}</span>
   </div>
 </div>
 </div>

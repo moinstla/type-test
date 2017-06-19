@@ -12,6 +12,7 @@ export class TypingTestComponent implements OnInit {
   charsArray: string[];
   inputtedKey: string;
   successArray: string[] = [];
+  wrongKey: boolean; 
 
   constructor() { }
 
@@ -32,6 +33,8 @@ export class TypingTestComponent implements OnInit {
         if (this.charsArray[0] === this.inputtedKey) {
           this.successArray.push(this.charsArray.shift());
           console.log(this.successArray);
+        } else {
+          this.wrongKey = true;
         }
 
       }
