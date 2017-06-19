@@ -12,10 +12,3 @@ span {
 .typing-text {
   font-size: 20px;
 }
-
-.successHighlight {
-  background-color: lightblue;
-}
-.failureHighlight {
-  background-color: lightblue;
-}

@@ -3,7 +3,12 @@
 <div class="typing-text">
 <div id="wrapper">
   <div *ngFor="let char of charsArray; let index = index">
-      <span [class.successHighlight]="index == 0" id="`character-{{char}}`">{{char}}</span>
+    <div *ngIf="index == 0">
+      <span [ngStyle]="{'background-color':' '+hightlightColor}">{{char}}</span>
+    </div>
+    <div *ngIf="index !==0 ">
+      <span>{{char}}</span>
+    </div>
   </div>
 </div>
 </div>
