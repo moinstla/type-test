@@ -1,0 +1,17 @@
+{
+  "name": "type-test",
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "https://github.com/moinstla/type-test",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}
