@@ -12,3 +12,7 @@ span {
 .typing-text {
   font-size: 20px;
 }
+
+.failureHighlight {
+  background-color: red;
+}

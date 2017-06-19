@@ -12,8 +12,8 @@ export class TypingTestComponent implements OnInit {
   charsArray: string[];
   inputtedKey: string;
   successArray: string[] = [];
-  wrongKey: boolean;
   hightlightColor: string = "green";
+  failureArray: string[] = [];
 
   constructor() { }
 
@@ -35,7 +35,9 @@ export class TypingTestComponent implements OnInit {
           this.successArray.push(this.charsArray.shift());
           this.hightlightColor = "green";
         } else {
+          this.failureArray.push(this.inputtedKey)
           this.hightlightColor = "red";
+          console.log(this.failureArray)
         }
 
       }
