@@ -19,6 +19,9 @@ export class TypingTestComponent implements OnInit {
   progress: number = 0;
   successCounter: number = 0;
   capsLock: boolean;
+  time: number = 0;
+  timerID;
+  timerStatus: boolean = false;
 
   constructor() { }
 
@@ -27,6 +30,8 @@ export class TypingTestComponent implements OnInit {
     this.charsArray = this.codeText.split('');
     this.displayArray = this.codeText.split('');
   }
+
+
 
   @HostListener('document:keypress', ['$event'])
   whatKey(event: KeyboardEvent) {
