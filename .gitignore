@@ -18,6 +18,9 @@
 .settings/
 *.sublime-workspace
 
+#Api Keys
+/src/app/api-keys.ts 
+
 # IDE - VSCode
 .vscode/*
 !.vscode/settings.json

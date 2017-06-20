@@ -1,6 +1,8 @@
 
+<button *ngIf="startButton" (click)="startGame()">Start</button>
 
-<div class="typing-text">
+
+<div *ngIf="game" class="typing-text">
   <div id="progress-bar">
     <div [style.width]="progress + '%'" id="bar-fill">
     </div>
