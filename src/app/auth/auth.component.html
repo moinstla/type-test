@@ -1,9 +1,8 @@
-<h3>Admin login</h3>
-
+<h3>User Login</h3>
+<br>
 <div class="login-message">
-  <span *ngIf="user | async">Welcome</span>
-  <span *ngIf="(user | async) == null"><em>please log in</em></span>
-  <strong>{{ (user | async)?.email }}</strong> <a *ngIf="user | async" class="red-logout" (click)="logout()">Logout</a>
+  <h4 *ngIf="user | async">Logged in as: <span class="highlight-email">{{ (user | async)?.email }}</span></h4>
+  <button *ngIf="user | async" class="red-logout" (click)="logout()">Logout</button>
 </div>
 
 <div *ngIf="(user | async) == null">
@@ -12,5 +11,5 @@
   <input type="password" #password placeholder="Password">
   <button (click)="login(email.value, password.value)">Login</button>
 </div>
-
+<br>
 <app-admin *ngIf="user | async"></app-admin>
