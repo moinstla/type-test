@@ -5,8 +5,10 @@
     <div [style.width]="progress + '%'" id="bar-fill">
     </div>
   </div>
-  <div id="stats">
+  <div id="stats" *ngIf="progress === 100">
     <h1>Accuracy: {{accuracy.toFixed(2)}}%</h1>
+    <h1>Time: {{roundTime.toFixed(2)}} seconds</h1>
+    <h1>Characters Per Minute: {{roundCPM.toFixed(0)}}</h1>
   </div>
   <div id="wrapper">
       <div *ngFor="let char of displayArray; let index = index" class="letter">
