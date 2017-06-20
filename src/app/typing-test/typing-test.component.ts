@@ -18,6 +18,7 @@ export class TypingTestComponent implements OnInit {
   accuracy: number = 100;
   progress: number = 0;
   successCounter: number = 0;
+  capsLock: boolean;
 
   constructor() { }
 
@@ -39,8 +40,7 @@ export class TypingTestComponent implements OnInit {
         this.failureArray.push(this.inputtedKey)
         this.hightlightColor = "#ff8787";
       }
-    console.log(this.successCounter);
-    console.log(this.failureArray);
+    this.capsLock = event.getModifierState("CapsLock");
     this.accuracy = (this.successArray.length / this.totalKeys) * 100;
     this.progress = (this.successArray.length / this.codeText.length) * 100;
     }

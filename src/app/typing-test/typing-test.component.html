@@ -5,20 +5,20 @@
     <div [style.width]="progress + '%'" id="bar-fill">
     </div>
   </div>
+  <div id="stats">
+    <h1>Accuracy: {{accuracy}}%</h1>
+  </div>
   <div id="wrapper">
-    <div id="stats">
-      <h1>{{successArray}}</h1>
-      <h1>Accuracy: {{accuracy}}%</h1>
-    </div>
-    <div id="text">
-      <div *ngFor="let char of displayArray; let index = index">
+      <div *ngFor="let char of displayArray; let index = index" class="letter">
         <div *ngIf="index == successArray.length">
           <span [ngStyle]="{'background-color':' '+hightlightColor}">{{char}}</span>
         </div>
-        <div *ngIf="index !== successArray.length ">
+        <div *ngIf="index !== successArray.length">
           <span>{{char}}</span>
         </div>
       </div>
-    </div>
   </div>
+</div>
+<div id="caps-lock" *ngIf="capsLock">
+  <h1>Caps-Lock is on!</h1>
 </div>
