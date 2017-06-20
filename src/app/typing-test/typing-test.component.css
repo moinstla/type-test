@@ -43,3 +43,8 @@ span {
   background-color: #a3e4a3;
   width:50%;
 }
+
+.failed-letter {
+  color: red;
+  font-size: 22px;
+}

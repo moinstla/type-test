@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { TypingTestComponent } from './typing-test/typing-test.component';
 import { CheckTextPipe } from './check-text.pipe';
+import { KeysPipe } from './keys.pipe';
 
 export const firebaseConfig = {
   apiKey: masterFirebaseConfig.apiKey,
@@ -24,7 +25,8 @@ export const firebaseConfig = {
     AppComponent,
     WelcomeComponent,
     TypingTestComponent,
-    CheckTextPipe
+    CheckTextPipe,
+    KeysPipe
   ],
   imports: [
     BrowserModule,
