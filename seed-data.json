@@ -1,36 +1,24 @@
-{ "sampleCodes": [
+{ "sampleCodes": {
+  "javascript": [
   {
-    "lanuage": "Javascript",
-    "level": "1",
-    "text": "_updateVisibility: function() { let active global.screen.get_active_workspace_index(); for (let w = 0; w < this._workspaces.length; w++) { let workspace = this._workspaces[w]; if (this._animating || this._scrolling) { workspace.actor.show();} else { if (this._inDrag) workspace.actor.visible = (Math.abs(w - active) <= 1); else workspace.actor.visible = (w == active);}}}"
-  } ,
-  {
-  "language": "Javascript",
-  "level": "2",
-  "text": "panAction.connect('gesture-cancel', Lang.bind(this, function() { clickAction.release(); for (let i = 0; i < this._workspacesViews.length; i++) this._workspacesViews[i].endSwipeScroll(); })); panAction.connect('gesture-end', Lang.bind(this, function() { clickAction.release(); for (let i = 0; i < this._workspacesViews.length; i++) this._workspacesViews[i].endSwipeScroll(); })); Main.overview.addAction(panAction); this.actor.bind_property('mapped', panAction, 'enabled', GObject.BindingFlags.SYNC_CREATE);"
-  },
-  {
-    "language": "Javascript",
+  "level": "1",
+  "text": "_updateVisibility: function() { let active global.screen.get_active_workspace_index(); for (let w = 0; w < this._workspaces.length; w++) { let workspace = this._workspaces[w]; if (this._animating || this._scrolling) { workspace.actor.show();} else { if (this._inDrag) workspace.actor.visible = (Math.abs(w - active) <= 1); else workspace.actor.visible = (w == active);}}}"
+  }, {
+    "level": "2",
+    "text": "panAction.connect('gesture-cancel', Lang.bind(this, function() { clickAction.release(); for (let i = 0; i < this._workspacesViews.length; i++) this._workspacesViews[i].endSwipeScroll(); })); panAction.connect('gesture-end', Lang.bind(this, function() { clickAction.release(); for (let i = 0; i < this._workspacesViews.length; i++) this._workspacesViews[i].endSwipeScroll(); })); Main.overview.addAction(panAction); this.actor.bind_property('mapped', panAction, 'enabled', GObject.BindingFlags.SYNC_CREATE);"
+  }, {
     "level": "3",
     "text": "_setReservedSlot: function(window) { for (let i = 0; i < this._workspaces.length; i++) this._workspaces[i].setReservedSlot(window); }, _syncFullGeometry: function() { for (let i = 0; i < this._workspaces.length; i++) this._workspaces[i].setFullGeometry(this._fullGeometry); }, _syncActualGeometry: function() { for (let i = 0; i < this._workspaces.length; i++) this._workspaces[i].setActualGeometry(this._actualGeometry); }, getActiveWorkspace: function() { let active = global.screen.get_active_workspace index(); return this._workspaces[active];}"
-  },
-  {
-    "language": "Ruby",
-    "level": "1",
-    "text": "def profile_allocations(name) GC.disable initial_size = ObjectSpace.count_objects yield changes = ObjectSpace.count_objects changes.each do |k, _| changes[k] -= initial_size[k] end puts '#{name} changes' changes.sort{|a,b| b[1] <=> a[1]}.each do |a,b| next if b <= 0 # 1 extra hash for trackingputs '#{a} #{a == :T_HASH ? b-1 : b}' end GC.enable end"
-  },
-  {
-    "lanuage": "Ruby",
-    "level": "2",
-    "text": "Benchmark.bmbm do |x| x.report('find') do 100.times{stuff} end end x.report('grab 10 users id') do 100.times{User.limit(10).select(:id).to_a} end x.report('grab 10 users') do 100.times{User.limit(10).to_a} end profile('topic query') do r = TopicQuery.new(u, {}).list_latest r.topics.to_a end"
-  },
-  {
-    "lanuage": "Ruby",
-    "level": "3",
-    "text": "x.report('grab 10 users') do 100.times{User.limit(10).to_a} end x.report('pg direct grab 10 users') do 100.times do r =ActiveRecord::Base.connection.raw_connection.async_exec('select * from users limit 10') r.fields.each_with_index do |f,i| r.ftype(i)end r.each_row do |x| x end end end"
+  }] ,
+  "ruby": [
+    { "level": "1",
+      "text": "def profile_allocations(name) GC.disable initial_size = ObjectSpace.count_objects yield changes = ObjectSpace.count_objects changes.each do |k, _| changes[k] -= initial_size[k] end puts '#{name} changes' changes.sort{|a,b| b[1] <=> a[1]}.each do |a,b| next if b <= 0 # 1 extra hash for trackingputs '#{a} #{a == :T_HASH ? b-1 : b}' end GC.enable end"
+    }, {
+      "level": "2",
+      "text": "Benchmark.bmbm do |x| x.report('find') do 100.times{stuff} end end x.report('grab 10 users id') do 100.times{User.limit(10).select(:id).to_a} end x.report('grab 10 users') do 100.times{User.limit(10).to_a} end profile('topic query') do r = TopicQuery.new(u, {}).list_latest r.topics.to_a end"
+    }, {
+      "level": "3",
+      "text": "x.report('grab 10 users') do 100.times{User.limit(10).to_a} end x.report('pg direct grab 10 users') do 100.times do r =ActiveRecord::Base.connection.raw_connection.async_exec('select * from users limit 10') r.fields.each_with_index do |f,i| r.ftype(i)end r.each_row do |x| x end end end"
+    }]
   }
-
-  ]
-
-
 }

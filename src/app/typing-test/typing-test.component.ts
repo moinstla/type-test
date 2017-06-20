@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { SampleCode } from '../sample-code.model';
 import { DataService } from '../data.service';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 
 @Component({
   selector: 'app-typing-test',
@@ -30,18 +31,25 @@ export class TypingTestComponent implements OnInit {
   timerStatus: boolean = false;
   roundTime: number;
   roundCPM: number;
-
-  sampleCode: any;
+  javascriptCode = [];
+  rubyCode = [];
+  sampleCode;
+  currentLevel;
 
 
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    this.codeText = "animateToOverview: function(animationType) { for (let w = 0; w < this._workspaces.length; w++) { if (animationType == AnimationType.ZOOM)";
-    this.charsArray = this.codeText.split('');
-    this.displayArray = this.codeText.split('');
-    this.sampleCode = this.dataService.getSampleCodes();
-    console.log(this.sampleCode)
+    this.dataService.getSampleCodes().subscribe(dataLastEmittedFromObserver => {
+    this.sampleCode = dataLastEmittedFromObserver;
+
+    this.sampleCode[0].forEach((level) => {
+      this.javascriptCode.push(level);
+    });
+    this.sampleCode[1].forEach((level) => {
+      this.rubyCode.push(level);
+    });
+    });
   }
 
   startTime() {
@@ -86,6 +94,23 @@ export class TypingTestComponent implements OnInit {
     startGame() {
       this.game = true;
       this.startButton = false;
+      this.codeText = this.javascriptCode[0].text;
+      this.splitCode(this.codeText);
+    }
+
+    splitCode(codeText) {
+      this.charsArray = codeText.split("");
+      this.displayArray = codeText.split("");
+    }
+
+    nextLevel() {
+      if (this.codeText === this.javascriptCode[0].text) {
+        this.codeText = this.javascriptCode[1].text;
+        this.splitCode(this.codeText);
+      } else if (this.codeText === this.javascriptCode[1].text) {
+        this.codeText = this.javascriptCode[2].text;
+        this.splitCode(this.codeText);
+      }
     }
 
 }
