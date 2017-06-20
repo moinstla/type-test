@@ -1,6 +1,7 @@
 <div class="my-nav">
   <div class="container">
     <ul>
+      <li><a routerLink="">Home</a></li>
       <li><a routerLink="admin">Admin</a></li>
       <li *ngIf="user | async" class="login-message"><em>signed in as {{ (user | async)?.email }}</em></li>
     </ul>
