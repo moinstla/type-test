@@ -1,7 +1,4 @@
-
 <button *ngIf="startButton" (click)="startGame()">Start</button>
-
-
 <div *ngIf="game" class="typing-text">
   <div id="progress-bar">
     <div [style.width]="progress + '%'" id="bar-fill">
@@ -11,16 +8,21 @@
     <h1>Accuracy: {{accuracy.toFixed(2)}}%</h1>
     <h1>Time: {{roundTime.toFixed(2)}} seconds</h1>
     <h1>Characters Per Minute: {{roundCPM.toFixed(0)}}</h1>
+    <ul>
+      <li *ngFor="let entry of failureStats | keys">
+        You missed the character <span class="failed-letter">{{entry.key}}</span> {{entry.value}} {{entry.amount}}
+      </li> 
+    </ul>
   </div>
-  <div id="wrapper">
-      <div *ngFor="let char of displayArray; let index = index" class="letter">
-        <div *ngIf="index == successArray.length">
-          <span [ngStyle]="{'background-color':' '+hightlightColor}">{{char}}</span>
-        </div>
-        <div *ngIf="index !== successArray.length">
-          <span>{{char}}</span>
-        </div>
+  <div id="wrapper" class="well">
+    <div *ngFor="let char of displayArray; let index = index" class="letter">
+      <div *ngIf="index == successArray.length">
+        <span [ngStyle]="{'background-color':' '+hightlightColor}">{{char}}</span>
       </div>
+      <div *ngIf="index !== successArray.length">
+        <span>{{char}}</span>
+      </div>
+    </div>
   </div>
   <button (click)="nextLevel()">Next Level</button>
 </div>

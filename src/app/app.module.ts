@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { routing } from './app.routing';
-import { masterFirebaseConfig} from './api-keys';
+import { masterFirebaseConfig } from './api-keys';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 
@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { TypingTestComponent } from './typing-test/typing-test.component';
 import { CheckTextPipe } from './check-text.pipe';
+import { KeysPipe } from './keys.pipe';
 
 export const firebaseConfig = {
   apiKey: masterFirebaseConfig.apiKey,
@@ -24,7 +25,8 @@ export const firebaseConfig = {
     AppComponent,
     WelcomeComponent,
     TypingTestComponent,
-    CheckTextPipe
+    CheckTextPipe,
+    KeysPipe
   ],
   imports: [
     BrowserModule,
