@@ -1,14 +1,24 @@
 
 
 <div class="typing-text">
-<div id="wrapper">
-  <div *ngFor="let char of charsArray; let index = index">
-    <div *ngIf="index == 0">
-      <span [ngStyle]="{'background-color':' '+hightlightColor}">{{char}}</span>
-    </div>
-    <div *ngIf="index !==0 ">
-      <span>{{char}}</span>
+  <div id="progress-bar">
+    <div [style.width]="progress + '%'" id="bar-fill">
     </div>
   </div>
-</div>
+  <div id="wrapper">
+    <div id="stats">
+      <h1>{{successArray}}</h1>
+      <h1>Accuracy: {{accuracy}}%</h1>
+    </div>
+    <div id="text">
+      <div *ngFor="let char of displayArray; let index = index">
+        <div *ngIf="index == successArray.length">
+          <span [ngStyle]="{'background-color':' '+hightlightColor}">{{char}}</span>
+        </div>
+        <div *ngIf="index !== successArray.length ">
+          <span>{{char}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
