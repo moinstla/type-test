@@ -17,22 +17,20 @@ export class TypingTestComponent implements OnInit {
   displayArray: string[];
   inputtedKey: string;
   successArray: string[] = [];
-  hightlightColor: string = "#73d073";
+  hightlightColor: string = "#a3e4a3";
   failureArray: string[] = [];
   totalKeys: number = 0;
   accuracy: number = 100;
   progress: number = 0;
   successCounter: number = 0;
   capsLock: boolean;
-  startStamp;
-  endStamp;
-  timerID;
+  startStamp: number;
+  endStamp: number;
   timerStatus: boolean = false;
   roundTime: number;
   roundCPM: number;
-
   sampleCode: any;
-
+  failureStats = {}
 
   constructor(private dataService: DataService) { }
 
@@ -41,7 +39,6 @@ export class TypingTestComponent implements OnInit {
     this.charsArray = this.codeText.split('');
     this.displayArray = this.codeText.split('');
     this.sampleCode = this.dataService.getSampleCodes();
-    console.log(this.sampleCode)
   }
 
   startTime() {
@@ -59,6 +56,13 @@ export class TypingTestComponent implements OnInit {
       this.endStamp = d.getTime();
       this.roundTime = (this.endStamp - this.startStamp) / 1000;
       this.roundCPM = (this.displayArray.length * 60) / this.roundTime;
+      this.failureArray.forEach((letter) => {
+        var occurrences = this.failureArray.filter(function(val) {
+          return val === letter;
+        }).length;
+        this.failureStats[letter] = occurrences;
+      });
+      console.log(this.failureStats);
     }
   }
 
@@ -69,10 +73,10 @@ export class TypingTestComponent implements OnInit {
     this.totalKeys += 1;
       if (this.charsArray[this.successCounter] === this.inputtedKey) {
         this.successArray.push(this.charsArray[this.successCounter]);
-        this.hightlightColor = "#73d073";
+        this.hightlightColor = "#a3e4a3";
         this.successCounter += 1;
       } else {
-        this.failureArray.push(this.inputtedKey)
+        this.failureArray.push(this.charsArray[this.successCounter])
         this.hightlightColor = "#ff8787";
       }
     this.capsLock = event.getModifierState("CapsLock");
