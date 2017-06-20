@@ -1,12 +1,17 @@
 import { Component, OnInit, HostListener } from '@angular/core';
+import { SampleCode } from '../sample-code.model';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-typing-test',
   templateUrl: './typing-test.component.html',
-  styleUrls: ['./typing-test.component.css']
+  styleUrls: ['./typing-test.component.css'],
+  providers: [DataService]
 })
 
 export class TypingTestComponent implements OnInit {
+  game: boolean = false;
+  startButton: boolean = true;
   codeText: string;
   charsArray: string[];
   displayArray: string[];
@@ -26,12 +31,17 @@ export class TypingTestComponent implements OnInit {
   roundTime: number;
   roundCPM: number;
 
-  constructor() { }
+  sampleCode: any;
+
+
+  constructor(private dataService: DataService) { }
 
   ngOnInit() {
     this.codeText = "animateToOverview: function(animationType) { for (let w = 0; w < this._workspaces.length; w++) { if (animationType == AnimationType.ZOOM)";
     this.charsArray = this.codeText.split('');
     this.displayArray = this.codeText.split('');
+    this.sampleCode = this.dataService.getSampleCodes();
+    console.log(this.sampleCode)
   }
 
   startTime() {
@@ -72,4 +82,10 @@ export class TypingTestComponent implements OnInit {
       this.endTime();
     }
   }
+
+    startGame() {
+      this.game = true;
+      this.startButton = false;
+    }
+
 }
