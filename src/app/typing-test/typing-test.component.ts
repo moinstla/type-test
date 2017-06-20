@@ -23,7 +23,16 @@ export class TypingTestComponent implements OnInit {
   accuracy: number = 100;
   progress: number = 0;
   successCounter: number = 0;
+  capsLock: boolean;
+  startStamp;
+  endStamp;
+  timerID;
+  timerStatus: boolean = false;
+  roundTime: number;
+  roundCPM: number;
+
   sampleCode: any;
+
 
   constructor(private dataService: DataService) { }
 
@@ -35,8 +44,27 @@ export class TypingTestComponent implements OnInit {
     console.log(this.sampleCode)
   }
 
+  startTime() {
+    if (this.timerStatus === false) {
+      this.timerStatus = true;
+      let d = new Date();
+      this.startStamp = d.getTime();
+    }
+  }
+
+  endTime() {
+    if (this.timerStatus === true) {
+      this.timerStatus = false;
+      let d = new Date();
+      this.endStamp = d.getTime();
+      this.roundTime = (this.endStamp - this.startStamp) / 1000;
+      this.roundCPM = (this.displayArray.length * 60) / this.roundTime;
+    }
+  }
+
   @HostListener('document:keypress', ['$event'])
   whatKey(event: KeyboardEvent) {
+    this.startTime();
     this.inputtedKey = event.key;
     this.totalKeys += 1;
       if (this.charsArray[this.successCounter] === this.inputtedKey) {
@@ -47,19 +75,17 @@ export class TypingTestComponent implements OnInit {
         this.failureArray.push(this.inputtedKey)
         this.hightlightColor = "#ff8787";
       }
-    console.log(this.successCounter);
-    console.log(this.failureArray);
+    this.capsLock = event.getModifierState("CapsLock");
     this.accuracy = (this.successArray.length / this.totalKeys) * 100;
     this.progress = (this.successArray.length / this.codeText.length) * 100;
+    if (this.progress === 100) {
+      this.endTime();
     }
+  }
 
     startGame() {
       this.game = true;
       this.startButton = false;
     }
-
-
-
-
 
 }

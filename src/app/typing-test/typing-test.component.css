@@ -1,8 +1,11 @@
 span {
-  display: inline;
-  float: left;
-  white-space: pre;
+  display: inline-block;
   letter-spacing: 2px;
+  white-space: pre;
+}
+
+.letter {
+  display: inline-block;
 }
 
 #wrapper {
@@ -11,10 +14,20 @@ span {
 
 .typing-text {
   font-size: 20px;
+  display: block;
 }
 
 .failureHighlight {
   background-color: red;
+}
+
+#text {
+  display: block;
+}
+
+#caps-lock {
+  margin: 20px 0;
+  color: red;
 }
 
 #progress-bar {
