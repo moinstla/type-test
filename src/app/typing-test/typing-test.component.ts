@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { SampleCode } from '../sample-code.model';
 import { DataService } from '../data.service';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 
 @Component({
   selector: 'app-typing-test',
@@ -30,18 +31,20 @@ export class TypingTestComponent implements OnInit {
   timerStatus: boolean = false;
   roundTime: number;
   roundCPM: number;
-
-  sampleCode: any;
+  javascriptCode: string[] = [];
+  sampleCode: SampleCode[];
 
 
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    this.codeText = "animateToOverview: function(animationType) { for (let w = 0; w < this._workspaces.length; w++) { if (animationType == AnimationType.ZOOM)";
-    this.charsArray = this.codeText.split('');
-    this.displayArray = this.codeText.split('');
-    this.sampleCode = this.dataService.getSampleCodes();
-    console.log(this.sampleCode)
+    // this.codeText = "animateToOverview: function(animationType) { for (let w = 0; w < this._workspaces.length; w++) { if (animationType == AnimationType.ZOOM)";
+    // this.charsArray = this.codeText.split('');
+    // this.displayArray = this.codeText.split('');
+     this.dataService.getSampleCodes().subscribe(dataLastEmittedFromObserver => {
+    this.sampleCode = dataLastEmittedFromObserver;
+    this.javascriptCode.push(this.sampleCode[0].text, this.sampleCode[1].text, this.sampleCode[2].text)
+    });
   }
 
   startTime() {
@@ -86,6 +89,9 @@ export class TypingTestComponent implements OnInit {
     startGame() {
       this.game = true;
       this.startButton = false;
+      this.codeText = this.javascriptCode[0];
+      this.charsArray = this.codeText.split("");
+      this.displayArray = this.codeText.split("");
     }
 
 }
