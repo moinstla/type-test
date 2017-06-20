@@ -28,7 +28,6 @@ export class AuthComponent {
     .catch(function(error) {
       // failure :(
       document.getElementById('login-warning').style.display = 'block';
-      console.log('dang');
     });
   }
 
