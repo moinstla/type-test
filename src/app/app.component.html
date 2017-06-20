@@ -1,3 +1,12 @@
-<h1>
-  {{title}}
-</h1>
+<nav class="navbar navbar-inverse bg-primary">
+       <a class="navbar-brand" routerLink='' >Home</a>
+       <a class="navbar-brand" routerLink='type-test'>Typing Test</a>
+     </nav>
+
+<div class="container">
+  <h1>
+    {{title}}
+  </h1>
+
+  <router-outlet></router-outlet>
+</div>
