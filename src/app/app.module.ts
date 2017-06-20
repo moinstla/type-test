@@ -2,49 +2,41 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { RouterModule, Routes } from "@angular/router";
-
-import {AngularFireModule} from "angularfire2";
+import { masterFirebaseConfig } from './api-keys';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 import { AppComponent } from './app.component';
-import { AuthService } from './providers/auth.service';
-import { LogInComponent } from './log-in/log-in.component';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { routing } from './app.routing';
+import { AuthComponent } from './auth/auth.component';
+import { AdminComponent } from './admin/admin.component';
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyBRRH4wVXpbKRXfot4Qrvt21Olxvu_QKwE",
-  authDomain: "type-test-33c14.firebaseapp.com",
-  databaseURL: "https://type-test-33c14.firebaseio.com",
-  storageBucket: "type-test-33c14.appspot.com",
-  messagingSenderId: "826920843551"
-}
-
-const routes: Routes = [
-
-  {
-    path: '',
-    component: WelcomeComponent
-  },
-  {
-    path: 'login',
-    component: LogInComponent
-  }
-]
+  apiKey: masterFirebaseConfig.apiKey,
+  authDomain: masterFirebaseConfig.authDomain,
+  databaseURL: masterFirebaseConfig.databaseURL,
+  storageBucket: masterFirebaseConfig.storageBucket,
+  messagingSenderId: masterFirebaseConfig.messagingSenderId
+};
 
 @NgModule({
   declarations: [
     AppComponent,
-    LogInComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    AuthComponent,
+    AdminComponent
   ],
+
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
+    routing,
     AngularFireModule.initializeApp(firebaseConfig),
-    RouterModule.forRoot(routes)
+    AngularFireDatabaseModule
   ],
-  providers: [AuthService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

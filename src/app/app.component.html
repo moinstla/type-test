@@ -1,13 +1,14 @@
+<div class="my-nav">
+  <div class="container">
+    <ul>
+      <li><a routerLink="admin">Admin</a></li>
+      <li *ngIf="user | async" class="login-message"><em>signed in as {{ (user | async)?.email }}</em></li>
+    </ul>
+  </div>
+</div>
+
 <div class="container">
-  <nav class="navbar navbar-default navbar-fixed-top">
-      <div *ngIf="isLoggedIn">
-        <p class="navbar-text navbar-right">Logged In: {{user_displayName}} ({{user_email}})<p>
-      </div>
-      <div *ngIf="!isLoggedIn">
-        <p class="navbar-text navbar-right">Logged Out</p>
-      </div>
-  </nav>
-
-  <router-outlet></router-outlet>
-
+  <div class="my-content">
+    <router-outlet></router-outlet>
+  </div>
 </div>
