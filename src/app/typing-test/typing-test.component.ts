@@ -13,7 +13,8 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 
 export class TypingTestComponent implements OnInit {
   game: boolean = false;
-  startButton: boolean = true;
+  startJavascriptButton: boolean = true;
+  startRubyButton: boolean = true;
   codeText: string;
   charsArray: string[];
   displayArray: string[];
@@ -97,10 +98,18 @@ export class TypingTestComponent implements OnInit {
     }
   }
 
-    startGame() {
+    startJavascript() {
       this.game = true;
-      this.startButton = false;
+      this.startJavascriptButton = false;
+      this.startRubyButton = true;
       this.codeText = this.javascriptCode[0].text;
+      this.splitCode(this.codeText);
+    }
+    startRuby() {
+      this.game = true;
+      this.startRubyButton = false;
+      this.startJavascriptButton = true;
+      this.codeText = this.rubyCode[1].text;
       this.splitCode(this.codeText);
     }
 

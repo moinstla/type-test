@@ -16,6 +16,10 @@ const appRoutes: Routes = [
   {
     path: 'players/:id',
     component: PlayerComponent
+  },
+  {
+    path: 'players/:id/type-test',
+    component: TypingTestComponent
   }
 ];
 
