@@ -36,6 +36,7 @@ export class TypingTestComponent implements OnInit {
   sampleCode;
   failureStats;
   g;
+  
 
   private d3: D3;
   private parentNativeElement: any;
@@ -78,13 +79,13 @@ export class TypingTestComponent implements OnInit {
 
     let xAxis = this.d3.axisBottom(x);
 
-    let xAxisG = this.g.append("g").attr("transform", "translate(0, " + height + ")");
+    // let xAxisG = this.g.append("g").attr("transform", "translate(0, " + height + ")");
 
-    this.d3.timer(function() {
-      let now = Date.now();
-      x.domain([now - 5000, now]);
-      xAxisG.call(xAxis);
-    });
+    // this.d3.timer(function() {
+    //   let now = Date.now();
+    //   x.domain([now - 5000, now]);
+    //   // xAxisG.call(xAxis);
+    // });
   }
 
   drawCircle(color) {
@@ -96,13 +97,13 @@ export class TypingTestComponent implements OnInit {
         .attr("r", 100)
         .attr("stroke-opacity", 0)
         .attr("cy", Math.random() * 200)
-        .attr("cx", Math.random() * 2000)
+        .attr("cx", Math.random() * 1000)
         .style('fill', color);
 
     circle.transition("time")
         .duration(3000)
         .ease(this.d3.easeLinear)
-        .attr("cx", Math.random());
+        .attr("cx", Math.random() * this.progress * 10);
 
 
 
@@ -111,14 +112,13 @@ export class TypingTestComponent implements OnInit {
         .ease(this.d3.easeCubicOut)
         .attr("r", 3.5)
         .attr("stroke-opacity", 1)
-      .transition()
-        .delay(5000 - 750 * 2)
-        .ease(this.d3.easeCubicIn)
-        .attr("r", 80)
-        .attr("stroke-opacity", 0)
-        .remove();
+      // .transition()
+      //   .delay(5000 - 750 * 2)
+      //   .ease(this.d3.easeCubicIn)
+      //   .attr("r", 80)
+      //   .attr("stroke-opacity", 0)
+      //   .remove();
     });
-
   }
 
   startTime() {
