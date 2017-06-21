@@ -33,6 +33,7 @@ export class TypingTestComponent implements OnInit {
   javascriptCode = [];
   rubyCode = [];
   sampleCode;
+  failureStats: object = {};
 
   constructor(private dataService: DataService) { }
 
