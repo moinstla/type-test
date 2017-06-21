@@ -1,11 +1,13 @@
 { "sampleCodes": {
   "javascript": [
-    {
-    "level": "0",
-    "text": ["this is a test"]
-    },  {
-    "level": "1",
-    "text": "_updateVisibility: function() { let active global.screen.get_active_workspace_index(); for (let w = 0; w < this._workspaces.length; w++) { let workspace = this._workspaces[w]; if (this._animating || this._scrolling) { workspace.actor.show();} else { if (this._inDrag) workspace.actor.visible = (Math.abs(w - active) <= 1); else workspace.actor.visible = (w == active);}}}"
+  {
+  "level": "1",
+  "text": ["_updateVisibility: function() { let active global.screen.get_active_workspace_index();",
+    "for (let w = 0; w < this._workspaces.length; w++) { let workspace = this._workspaces[w];",
+    "if (this._animating || this._scrolling) { workspace.actor.show() }",
+    "else { if (this._inDrag) workspace.actor.visible = (Math.abs(w - active) <= 1);",
+    "else workspace.actor.visible = (w == active);}}}"
+  ]
   }, {
     "level": "2",
     "text": "panAction.connect('gesture-cancel', Lang.bind(this, function() { clickAction.release(); for (let i = 0; i < this._workspacesViews.length; i++) this._workspacesViews[i].endSwipeScroll(); })); panAction.connect('gesture-end', Lang.bind(this, function() { clickAction.release(); for (let i = 0; i < this._workspacesViews.length; i++) this._workspacesViews[i].endSwipeScroll(); })); Main.overview.addAction(panAction); this.actor.bind_property('mapped', panAction, 'enabled', GObject.BindingFlags.SYNC_CREATE);"
@@ -23,5 +25,26 @@
       "level": "3",
       "text": "x.report('grab 10 users') do 100.times{User.limit(10).to_a} end x.report('pg direct grab 10 users') do 100.times do r =ActiveRecord::Base.connection.raw_connection.async_exec('select * from users limit 10') r.fields.each_with_index do |f,i| r.ftype(i)end r.each_row do |x| x end end end"
     }]
+  },
+  "players": [{
+      "name": "Mohamed",
+      "image": "https://avatars0.githubusercontent.com/u/23644831?v=3&s=460",
+      "bio": "I once typed over thousand characters in a minute.",
+      "id": "1"
+      }, {
+      "name": "Monique",
+      "image": "https://avatars1.githubusercontent.com/u/24925676?v=3&s=460",
+      "bio": "My highest score is infinity.",
+      "id": "2"
+      }, {
+      "name": "Jason",
+      "image": "https://avatars0.githubusercontent.com/u/26388682?v=3&s=460",
+      "bio": "I spend all my time coding. That's why I'm so good.",
+      "id": "3"
+      }, {
+      "name": "Kai",
+      "image": "https://avatars1.githubusercontent.com/u/6610566?v=3&s=460",
+      "bio": "Motto: Go fast, hope for the best.",
+      "id": "4"
+    }]
   }
-}

@@ -14,6 +14,7 @@ export class TypingTestComponent implements OnInit {
   game: boolean = false;
   startButton: boolean = true;
   codeText: string;
+  level: number = 1;
   charsArray = [];
   displayArray = [];
   inputtedKey: string;
@@ -37,26 +38,25 @@ export class TypingTestComponent implements OnInit {
   failureStats: object = {};
   success;
   characters;
-  
+
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    // this.dataService.getSampleCodes().subscribe(dataLastEmittedFromObserver => {
-    //   this.sampleCode = dataLastEmittedFromObserver;
-    //
-    //   this.sampleCode[0].forEach((level) => {
-    //     this.javascriptCode.push(level);
-    //   });
-    //   this.sampleCode[1].forEach((level) => {
-    //     this.rubyCode.push(level);
-    //   });
-    // });
-    let level = {
-      level: "1",
-      text: ["this is some text", "this is some other text", "this is just more text", "this is bonus text"]
-    }
-    this.javascriptCode.push(level);
-    console.log(this.javascriptCode[0]['text']);
+    this.dataService.getSampleCodes().subscribe(dataLastEmittedFromObserver => {
+      this.sampleCode = dataLastEmittedFromObserver;
+      this.sampleCode[0].forEach((level) => {
+        this.javascriptCode.push(level);
+      });
+      this.sampleCode[1].forEach((level) => {
+        this.rubyCode.push(level);
+      });
+      this.startGame()
+    });
+    // let level = {
+    //   level: "1",
+    //   text: ["this is some text", "this is some other text", "this is just more text", "this is bonus text"]
+    // }
+    // this.javascriptCode.push(level);
   }
 
   startTime() {
@@ -106,7 +106,6 @@ export class TypingTestComponent implements OnInit {
     })
     this.success = [].concat.apply([], this.successArray);
     this.characters = [].concat.apply([], this.charsArray);
-    console.log(this.success);
     this.capsLock = event.getModifierState("CapsLock");
     this.accuracy = (this.success.length / this.totalKeys) * 100;
     this.progress = (this.success.length / this.characters.length) * 100;
@@ -116,23 +115,19 @@ export class TypingTestComponent implements OnInit {
   }
 
     startGame() {
-      this.game = true;
-      this.startButton = false;
-      // this.codeText = this.javascriptCode[0].text;
-      this.javascriptCode[0]["text"].forEach((line) => {
-        this.splitCode(line);
-      });
-      console.log('chars', this.charsArray);
-      console.log('display', this.displayArray);
-      console.log(this.currentLine);
+      this.splitCode(this.javascriptCode[(this.level - 1)].text)
       this.charsArray.forEach(() => {
         this.successArray.push([])
       });
+      this.game = true;
+      this.startButton = false;
     }
 
     splitCode(codeText) {
-      this.charsArray.push(codeText.split(""));
-      this.displayArray.push(codeText.split(""));
+      codeText.forEach((line) => {
+        this.charsArray.push(line.split(""));
+        this.displayArray.push(line.split(""));
+      })
     }
 
     reset() {
@@ -147,22 +142,12 @@ export class TypingTestComponent implements OnInit {
       this.successCounter = 0;
     }
 
-
-
     nextLevel() {
-      switch(this.codeText) {
-        case this.javascriptCode[0].text: {
-          this.reset();
-          this.codeText = this.javascriptCode[1].text;
-          this.splitCode(this.codeText);
-          break;
-        }
-        case this.javascriptCode[1].text: {
-          this.reset();
-          this.codeText = this.javascriptCode[2].text;
-          this.splitCode(this.codeText);
-          break;
-        }
+      if (this.javascriptCode[this.level]) {
+        this.displayArray = [];
+        this.charsArray = [];
+        this.level += 1;
+        this.startGame();
       }
     }
 
