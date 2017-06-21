@@ -14,6 +14,12 @@ export class WelcomeComponent implements OnInit {
   players: FirebaseListObservable<any[]>;
   currentRoute: string = this.router.url;
 
+
+
+    goToPlayerPage(clickedPlayer) {
+      this.router.navigate(['players', clickedPlayer.$key]);
+    };
+
   constructor(private router: Router, private playerService: PlayerService) { }
 
   ngOnInit() {
