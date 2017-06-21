@@ -56,3 +56,11 @@ span {
   color: red;
   font-size: 22px;
 }
+
+
+
+circle {
+  fill: none;
+  stroke: #000;
+  stroke-width: 1.5px;
+}
