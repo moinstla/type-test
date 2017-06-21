@@ -36,7 +36,10 @@ export class TypingTestComponent implements OnInit {
   sampleCode;
   failureStats;
   g;
-  
+  simulation;
+  svg;
+  width;
+  height;
 
   private d3: D3;
   private parentNativeElement: any;
@@ -69,6 +72,7 @@ export class TypingTestComponent implements OnInit {
   }
 
   drawBoard() {
+
     let svg = this.d3.select("svg"),
     margin = {top: 30, right: 30, bottom: 30, left: 200},
     width = +svg.attr("width") - margin.left - margin.right,
@@ -76,40 +80,34 @@ export class TypingTestComponent implements OnInit {
     this.g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     let x = this.d3.scaleTime().range([0, width]);
-
     let xAxis = this.d3.axisBottom(x);
 
-    // let xAxisG = this.g.append("g").attr("transform", "translate(0, " + height + ")");
-
-    // this.d3.timer(function() {
-    //   let now = Date.now();
-    //   x.domain([now - 5000, now]);
-    //   // xAxisG.call(xAxis);
-    // });
   }
 
+
+
   drawCircle(color) {
+
     this.d3.select("body").on("keydown", () => {
 
-    let time = Date.now();
+    let time = Date.now()
 
     let circle = this.g.append("circle")
-        .attr("r", 100)
-        .attr("stroke-opacity", 0)
+        .attr("r", 50)
         .attr("cy", Math.random() * 200)
-        .attr("cx", Math.random() * 1000)
+        .attr("cx", Math.random() * 600)
+        .attr("stroke", "black")
         .style('fill', color);
 
     circle.transition("time")
-        .duration(3000)
-        .ease(this.d3.easeLinear)
+        .duration(6000)
+        .ease(this.d3.easeElasticIn )
         .attr("cx", Math.random() * this.progress * 10);
 
 
-
     circle.transition()
-        .duration(1450)
-        .ease(this.d3.easeCubicOut)
+        .duration(3050)
+        .ease(this.d3.easeBounceOut)
         .attr("r", 3.5)
         .attr("stroke-opacity", 1)
       // .transition()
@@ -170,11 +168,11 @@ export class TypingTestComponent implements OnInit {
   }
 
     startGame() {
-      this.drawBoard();
       this.game = true;
       this.startButton = false;
       this.codeText = this.javascriptCode[0].text;
       this.splitCode(this.codeText);
+      this.drawBoard();
     }
 
     splitCode(codeText) {
