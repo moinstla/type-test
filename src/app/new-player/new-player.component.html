@@ -1,0 +1,19 @@
+<button id="add-member" *ngIf="!addForm" (click)='showAddForm()'class="btn btn-success">New Player</button>
+<br>
+<div *ngIf="addForm">
+  <div class="panel-body">
+      <label>Name:</label>
+      <br>
+      <input #newName>
+      <br>
+      <label>Image URL:</label>
+      <br>
+      <input #newImage>
+      <br>
+      <label>Bio:</label>
+      <br>
+      <textarea #newBio></textarea>
+    <br>
+    <button class="btn"(click)='showAddForm()' (click)="submitForm(newName.value, newImage.value, newBio.value); newName.value=''; newImage.value=''; newBio.value='';">Add</button>
+  </div>
+</div>
