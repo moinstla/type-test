@@ -1,8 +1,8 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
 import { SampleCode } from '../sample-code.model';
 import { DataService } from '../data.service';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
-// import { D3Service, D3, Selection } from 'd3-ng2-service';
+import { D3Service, D3, Selection } from 'd3-ng2-service';
 
 @Component({
   selector: 'app-typing-test',
@@ -36,9 +36,24 @@ export class TypingTestComponent implements OnInit {
   sampleCode;
   failureStats;
 
-  constructor(private dataService: DataService) { }
+  private d3: D3;
+  private parentNativeElement: any;
+
+  constructor(private dataService: DataService, element: ElementRef, d3Service: D3Service) {
+    this.d3 = d3Service.getD3();
+    this.parentNativeElement = element.nativeElement;
+  }
 
   ngOnInit() {
+
+    let d3 = this.d3;
+    let d3ParentElement: Selection<any, any, any, any>;
+
+    if (this.parentNativeElement !== null) {
+      d3ParentElement = d3.select(this.parentNativeElement);
+      // Do d3 stuff
+    }
+
     this.dataService.getSampleCodes().subscribe(dataLastEmittedFromObserver => {
     this.sampleCode = dataLastEmittedFromObserver;
 
@@ -49,6 +64,56 @@ export class TypingTestComponent implements OnInit {
       this.rubyCode.push(level);
     });
     });
+  }
+
+  draw() {
+    let svg = this.d3.select("svg"),
+    margin = {top: 30, right: 30, bottom: 30, left: 200},
+    width = +svg.attr("width") - margin.left - margin.right,
+    height = +svg.attr("height") - margin.top - margin.bottom,
+    g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    let x = this.d3.scaleTime().range([0, width]);
+
+    let xAxis = this.d3.axisBottom(x);
+
+    let xAxisG = g.append("g").attr("transform", "translate(0, " + height + ")");
+
+    this.d3.timer(function() {
+      let now = Date.now();
+      x.domain([now - 5000, now]);
+      xAxisG.call(xAxis);
+    });
+
+    this.d3.select("body").on("keydown", () => {
+
+    let time = Date.now();
+
+    let circle = g.append("circle")
+        .attr("r", 100)
+        .attr("stroke-opacity", 0)
+        .attr("cy", Math.random() * height)
+        .attr("cx", Math.random() * height * 10);
+
+    circle.transition("time")
+        .duration(3000)
+        .ease(this.d3.easeLinear)
+        .attr("cx", Math.random());
+
+    circle.transition()
+        .duration(1450)
+        .ease(this.d3.easeCubicOut)
+        .attr("r", 3.5)
+        .attr("stroke-opacity", 1)
+      .transition()
+        .delay(5000 - 750 * 2)
+        .ease(this.d3.easeCubicIn)
+        .attr("r", 80)
+        .attr("stroke-opacity", 0)
+        .style('fill', "green")
+        .remove();
+    });
+
   }
 
   startTime() {
@@ -98,6 +163,7 @@ export class TypingTestComponent implements OnInit {
   }
 
     startGame() {
+      this.draw();
       this.game = true;
       this.startButton = false;
       this.codeText = this.javascriptCode[0].text;

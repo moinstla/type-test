@@ -48,3 +48,14 @@ span {
   color: red;
   font-size: 22px;
 }
+
+svg {
+  text-align: center;
+}
+
+
+circle {
+  fill: none;
+  stroke: #000;
+  stroke-width: 1.5px;
+}
