@@ -15,6 +15,8 @@ export class TypingTestComponent implements OnInit {
   game: boolean = false;
   startJavascriptButton: boolean = true;
   startRubyButton: boolean = true;
+  nextLevelJavascriptButton: boolean = true;
+  nextLevelRubyButton: boolean = true;
   codeText: string;
   charsArray: string[];
   displayArray: string[];
@@ -101,6 +103,8 @@ export class TypingTestComponent implements OnInit {
     startJavascript() {
       this.game = true;
       this.startJavascriptButton = false;
+      this.nextLevelJavascriptButton = true;
+      this.nextLevelRubyButton = false;
       this.startRubyButton = true;
       this.codeText = this.javascriptCode[0].text;
       this.splitCode(this.codeText);
@@ -108,8 +112,10 @@ export class TypingTestComponent implements OnInit {
     startRuby() {
       this.game = true;
       this.startRubyButton = false;
+      this.nextLevelJavascriptButton = false;
+      this.nextLevelRubyButton = true;
       this.startJavascriptButton = true;
-      this.codeText = this.rubyCode[1].text;
+      this.codeText = this.rubyCode[0].text;
       this.splitCode(this.codeText);
     }
 
@@ -118,7 +124,7 @@ export class TypingTestComponent implements OnInit {
       this.displayArray = codeText.split("");
     }
 
-    nextLevel() {
+    nextLevelJavascript() {
       switch(this.codeText) {
         case this.javascriptCode[0].text: {
           this.successArray = [];
@@ -128,9 +134,29 @@ export class TypingTestComponent implements OnInit {
           break;
         }
         case this.javascriptCode[1].text: {
+          this.nextLevelJavascriptButton = false;
           this.successArray = [];
           this.successCounter = 0;
           this.codeText = this.javascriptCode[2].text;
+          this.splitCode(this.codeText);
+          break;
+        }
+      }
+    }
+    nextLevelRuby() {
+      switch(this.codeText) {
+        case this.rubyCode[0].text: {
+          this.successArray = [];
+          this.successCounter = 0;
+          this.codeText = this.rubyCode[1].text;
+          this.splitCode(this.codeText);
+          break;
+        }
+        case this.rubyCode[1].text: {
+          this.nextLevelRubyButton = false;
+          this.successArray = [];
+          this.successCounter = 0;
+          this.codeText = this.rubyCode[2].text;
           this.splitCode(this.codeText);
           break;
         }

@@ -23,22 +23,22 @@
   },
   "players": [{
       "name": "Mohamed",
-      "image": "https://avatars0.githubusercontent.com/u/23644831?v=3&s=460",
+      "image": "https://avatars0.githubusercontent.com/u/15679739?v=3&s=460",
       "bio": "I once typed over thousand characters in a minute.",
       "id": "1"
       }, {
       "name": "Monique",
-      "image": "https://avatars1.githubusercontent.com/u/24925676?v=3&s=460",
+      "image": "https://avatars0.githubusercontent.com/u/15679739?v=3&s=460",
       "bio": "My highest score is infinity.",
       "id": "2"
       }, {
       "name": "Jason",
-      "image": "https://avatars0.githubusercontent.com/u/26388682?v=3&s=460",
+      "image": "https://avatars0.githubusercontent.com/u/15679739?v=3&s=460",
       "bio": "I spend all my time coding. That's why I'm so good.",
       "id": "3"
       }, {
       "name": "Kai",
-      "image": "https://avatars1.githubusercontent.com/u/6610566?v=3&s=460",
+      "image": "https://avatars0.githubusercontent.com/u/15679739?v=3&s=460",
       "bio": "Motto: Go fast, hope for the best.",
       "id": "4"
     }]
