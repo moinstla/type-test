@@ -51,7 +51,7 @@ export class TypingTestComponent implements OnInit {
   }
 
   startTime() {
-    if (this.timerStatus === false) {
+    if (this.timerStatus === false && this.progress !== 100) {
       this.timerStatus = true;
       let d = new Date();
       this.startStamp = d.getTime();
@@ -108,18 +108,28 @@ export class TypingTestComponent implements OnInit {
       this.displayArray = codeText.split("");
     }
 
+    reset() {
+      this.progress = 0;
+      this.failureStats = {};
+      this.successArray = [];
+      this.failureArray = [];
+      this.totalKeys = 0;
+      this.accuracy = 0;
+      this.roundTime = 0;
+      this.roundCPM = 0;
+      this.successCounter = 0;
+    }
+
     nextLevel() {
       switch(this.codeText) {
         case this.javascriptCode[0].text: {
-          this.successArray = [];
-          this.successCounter = 0;
+          this.reset();
           this.codeText = this.javascriptCode[1].text;
           this.splitCode(this.codeText);
           break;
         }
         case this.javascriptCode[1].text: {
-          this.successArray = [];
-          this.successCounter = 0;
+          this.reset();
           this.codeText = this.javascriptCode[2].text;
           this.splitCode(this.codeText);
           break;

@@ -1,4 +1,4 @@
-<button *ngIf="startButton" (click)="startGame()">Start</button>
+<a class="btn btn-primary" *ngIf="startButton" (click)="startGame()">Start</a>
 <div *ngIf="game" class="typing-text">
   <div id="progress-bar">
     <div [style.width]="progress + '%'" id="bar-fill">
@@ -24,7 +24,7 @@
       </div>
     </div>
   </div>
-  <button (click)="nextLevel()">Next Level</button>
+  <a class="btn btn-success" (click)="nextLevel()">Next Level</a>
 </div>
 <div id="caps-lock" *ngIf="capsLock">
   <h1>Caps-Lock is on!</h1>
