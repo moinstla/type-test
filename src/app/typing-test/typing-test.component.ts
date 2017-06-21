@@ -16,6 +16,7 @@ export class TypingTestComponent implements OnInit {
   codeText: string;
   level: number = 1;
   charsArray = [];
+  language: string;
   displayArray = [];
   inputtedKey: string;
   successArray = [];
@@ -31,8 +32,8 @@ export class TypingTestComponent implements OnInit {
   timerStatus: boolean = false;
   roundTime: number;
   roundCPM: number;
-  javascriptCode = [];
-  rubyCode = [];
+  javascript = [];
+  ruby = [];
   sampleCode;
   currentLine: number = 0;
   failureStats: object = {};
@@ -45,18 +46,13 @@ export class TypingTestComponent implements OnInit {
     this.dataService.getSampleCodes().subscribe(dataLastEmittedFromObserver => {
       this.sampleCode = dataLastEmittedFromObserver;
       this.sampleCode[0].forEach((level) => {
-        this.javascriptCode.push(level);
+        this.javascript.push(level);
       });
       this.sampleCode[1].forEach((level) => {
-        this.rubyCode.push(level);
+        this.ruby.push(level);
       });
-      this.startGame()
+      this.startJavascript()
     });
-    // let level = {
-    //   level: "1",
-    //   text: ["this is some text", "this is some other text", "this is just more text", "this is bonus text"]
-    // }
-    // this.javascriptCode.push(level);
   }
 
   startTime() {
@@ -114,8 +110,19 @@ export class TypingTestComponent implements OnInit {
     }
   }
 
-    startGame() {
-      this.splitCode(this.javascriptCode[(this.level - 1)].text)
+    startJavascript() {
+      this.language = "javascript";
+      this.splitCode(this.javascript[(this.level - 1)].text)
+      this.charsArray.forEach(() => {
+        this.successArray.push([])
+      });
+      this.game = true;
+      this.startButton = false;
+    }
+
+    startRuby() {
+      this.language = "ruby";
+      this.splitCode(this.ruby[(this.level - 1)].text)
       this.charsArray.forEach(() => {
         this.successArray.push([])
       });
@@ -135,19 +142,31 @@ export class TypingTestComponent implements OnInit {
       this.failureStats = {};
       this.successArray = [];
       this.failureArray = [];
+      this.displayArray = [];
+      this.charsArray = [];
       this.totalKeys = 0;
       this.accuracy = 0;
       this.roundTime = 0;
       this.roundCPM = 0;
       this.successCounter = 0;
+      this.currentLine = 0;
     }
 
-    nextLevel() {
-      if (this.javascriptCode[this.level]) {
-        this.displayArray = [];
-        this.charsArray = [];
+    nextLevelJavascript() {
+      if (this.javascript[this.level]) {
         this.level += 1;
-        this.startGame();
+        console.log(this.level)
+        this.reset()
+        this.startJavascript()
+      }
+    }
+
+    nextLevelRuby() {
+      if (this.ruby[this.level]) {
+        this.level += 1;
+        console.log(this.level)
+        this.reset()
+        this.startRuby()
       }
     }
 

@@ -3,16 +3,6 @@
     <div [style.width]="progress + '%'" id="bar-fill">
     </div>
   </div>
-  <div id="stats" *ngIf="progress === 100">
-    <h1>Accuracy: {{accuracy.toFixed(2)}}%</h1>
-    <h1>Time: {{roundTime.toFixed(2)}} seconds</h1>
-    <h1>Characters Per Minute: {{roundCPM.toFixed(0)}}</h1>
-    <ul>
-      <li *ngFor="let entry of failureStats | keys">
-        You missed the character <span class="failed-letter">{{entry.key}}</span> {{entry.value}} {{entry.amount}}
-      </li> 
-    </ul>
-  </div>
   <div id="wrapper" class="well">
     <div *ngFor="let line of displayArray; let lineIndex = index" [ngClass]="{'enter': (successArray[currentLine].length === charsArray[currentLine].length && lineIndex === currentLine)}">
       <div *ngFor="let char of line; let index = index" class="letter">
@@ -31,7 +21,18 @@
     </div>
   </div>
 </div>
-<a class="btn btn-success" (click)="nextLevel()">Next Level</a>
 <div id="caps-lock" *ngIf="capsLock">
   <h1>Caps-Lock is on!</h1>
+</div>
+<div id="stats" *ngIf="progress === 100">
+  <h1>Accuracy: {{accuracy.toFixed(2)}}%</h1>
+  <h1>Time: {{roundTime.toFixed(2)}} seconds</h1>
+  <h1>Characters Per Minute: {{roundCPM.toFixed(0)}}</h1>
+  <ul>
+    <li *ngFor="let entry of failureStats | keys">
+      You missed the character <span class="failed-letter">{{entry.key}}</span> {{entry.value}} {{entry.amount}}
+    </li> 
+  </ul>
+  <a *ngIf="language === 'javascript'" class="btn btn-success" (click)="nextLevelJavascript()">Next Level</a>
+  <a *ngIf="language === 'ruby'" class="btn btn-success" (click)="nextLevelRuby()">Next Level</a>
 </div>
