@@ -109,13 +109,23 @@ export class TypingTestComponent implements OnInit {
     }
 
     nextLevel() {
-      if (this.codeText === this.javascriptCode[0].text) {
-        this.codeText = this.javascriptCode[1].text;
-        this.splitCode(this.codeText);
-      } else if (this.codeText === this.javascriptCode[1].text) {
-        this.codeText = this.javascriptCode[2].text;
-        this.splitCode(this.codeText);
+      switch(this.codeText) {
+        case this.javascriptCode[0].text: {
+          this.successArray = [];
+          this.successCounter = 0;
+          this.codeText = this.javascriptCode[1].text;
+          this.splitCode(this.codeText);
+          break;
+        }
+        case this.javascriptCode[1].text: {
+          this.successArray = [];
+          this.successCounter = 0;
+          this.codeText = this.javascriptCode[2].text;
+          this.splitCode(this.codeText);
+          break;
+        }
       }
     }
+
 
 }
