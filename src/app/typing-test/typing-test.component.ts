@@ -35,6 +35,7 @@ export class TypingTestComponent implements OnInit {
   rubyCode = [];
   sampleCode;
   failureStats;
+  g;
 
   private d3: D3;
   private parentNativeElement: any;
@@ -66,39 +67,44 @@ export class TypingTestComponent implements OnInit {
     });
   }
 
-  draw() {
+  drawBoard() {
     let svg = this.d3.select("svg"),
     margin = {top: 30, right: 30, bottom: 30, left: 200},
     width = +svg.attr("width") - margin.left - margin.right,
-    height = +svg.attr("height") - margin.top - margin.bottom,
-    g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    height = +svg.attr("height") - margin.top - margin.bottom;
+    this.g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     let x = this.d3.scaleTime().range([0, width]);
 
     let xAxis = this.d3.axisBottom(x);
 
-    let xAxisG = g.append("g").attr("transform", "translate(0, " + height + ")");
+    let xAxisG = this.g.append("g").attr("transform", "translate(0, " + height + ")");
 
     this.d3.timer(function() {
       let now = Date.now();
       x.domain([now - 5000, now]);
       xAxisG.call(xAxis);
     });
+  }
 
+  drawCircle(color) {
     this.d3.select("body").on("keydown", () => {
 
     let time = Date.now();
 
-    let circle = g.append("circle")
+    let circle = this.g.append("circle")
         .attr("r", 100)
         .attr("stroke-opacity", 0)
-        .attr("cy", Math.random() * height)
-        .attr("cx", Math.random() * height * 10);
+        .attr("cy", Math.random() * 200)
+        .attr("cx", Math.random() * 2000)
+        .style('fill', color);
 
     circle.transition("time")
         .duration(3000)
         .ease(this.d3.easeLinear)
         .attr("cx", Math.random());
+
+
 
     circle.transition()
         .duration(1450)
@@ -110,7 +116,6 @@ export class TypingTestComponent implements OnInit {
         .ease(this.d3.easeCubicIn)
         .attr("r", 80)
         .attr("stroke-opacity", 0)
-        .style('fill', "green")
         .remove();
     });
 
@@ -150,9 +155,11 @@ export class TypingTestComponent implements OnInit {
         this.successArray.push(this.charsArray[this.successCounter]);
         this.hightlightColor = "#a3e4a3";
         this.successCounter += 1;
+        this.drawCircle("green");
       } else {
         this.failureArray.push(this.charsArray[this.successCounter])
         this.hightlightColor = "#ff8787";
+        this.drawCircle("red");
       }
     this.capsLock = event.getModifierState("CapsLock");
     this.accuracy = (this.successArray.length / this.totalKeys) * 100;
@@ -163,7 +170,7 @@ export class TypingTestComponent implements OnInit {
   }
 
     startGame() {
-      this.draw();
+      this.drawBoard();
       this.game = true;
       this.startButton = false;
       this.codeText = this.javascriptCode[0].text;
