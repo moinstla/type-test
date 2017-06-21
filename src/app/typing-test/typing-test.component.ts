@@ -4,6 +4,7 @@ import { DataService } from '../data.service';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { D3Service, D3, Selection } from 'd3-ng2-service';
 
+
 @Component({
   selector: 'app-typing-test',
   templateUrl: './typing-test.component.html',
@@ -15,10 +16,11 @@ export class TypingTestComponent implements OnInit {
   game: boolean = false;
   startButton: boolean = true;
   codeText: string;
-  charsArray: string[];
-  displayArray: string[];
+  level: number = 1;
+  charsArray = [];
+  displayArray = [];
   inputtedKey: string;
-  successArray: string[] = [];
+  successArray = [];
   hightlightColor: string = "#a3e4a3";
   failureArray: string[] = [];
   totalKeys: number = 0;
@@ -36,10 +38,12 @@ export class TypingTestComponent implements OnInit {
   sampleCode;
   failureStats;
   g;
-  simulation;
   svg;
-  width;
-  height;
+  currentLine: number = 0;
+  failureStats: object = {};
+  success;
+  characters;
+
 
   private d3: D3;
   private parentNativeElement: any;
@@ -60,15 +64,20 @@ export class TypingTestComponent implements OnInit {
     }
 
     this.dataService.getSampleCodes().subscribe(dataLastEmittedFromObserver => {
-    this.sampleCode = dataLastEmittedFromObserver;
-
-    this.sampleCode[0].forEach((level) => {
-      this.javascriptCode.push(level);
+      this.sampleCode = dataLastEmittedFromObserver;
+      this.sampleCode[0].forEach((level) => {
+        this.javascriptCode.push(level);
+      });
+      this.sampleCode[1].forEach((level) => {
+        this.rubyCode.push(level);
+      });
+      this.startGame()
     });
-    this.sampleCode[1].forEach((level) => {
-      this.rubyCode.push(level);
-    });
-    });
+    // let level = {
+    //   level: "1",
+    //   text: ["this is some text", "this is some other text", "this is just more text", "this is bonus text"]
+    // }
+    // this.javascriptCode.push(level);
   }
 
   drawBoard() {
@@ -120,7 +129,7 @@ export class TypingTestComponent implements OnInit {
   }
 
   startTime() {
-    if (this.timerStatus === false) {
+    if (this.timerStatus === false && this.progress !== 100) {
       this.timerStatus = true;
       let d = new Date();
       this.startStamp = d.getTime();
@@ -133,7 +142,7 @@ export class TypingTestComponent implements OnInit {
       let d = new Date();
       this.endStamp = d.getTime();
       this.roundTime = (this.endStamp - this.startStamp) / 1000;
-      this.roundCPM = (this.displayArray.length * 60) / this.roundTime;
+      this.roundCPM = (this.displayArray.join("").length * 60) / this.roundTime;
       this.failureArray.forEach((letter) => {
         var occurrences = this.failureArray.filter(function(val) {
           return val === letter;
@@ -159,43 +168,72 @@ export class TypingTestComponent implements OnInit {
         this.hightlightColor = "#ff8787";
         this.drawCircle("red");
       }
+
+    if (this.charsArray[this.currentLine][this.successCounter] === this.inputtedKey) {
+      this.successArray[this.currentLine].push(this.charsArray[this.currentLine][this.successCounter]);
+      this.hightlightColor = "#a3e4a3";
+      this.successCounter += 1;
+      this.totalKeys += 1;
+    } else if ((this.charsArray[this.currentLine].length === this.successArray[this.currentLine].length) && (event.which === 13)) {
+      this.currentLine += 1;
+      this.successCounter = 0;
+    } else if ((this.charsArray[this.currentLine].length !== this.successArray[this.currentLine].length) && (this.charsArray[this.currentLine][this.successCounter] !== this.inputtedKey)) {
+      this.failureArray.push(this.charsArray[this.currentLine][this.successCounter])
+      this.hightlightColor = "#ff8787";
+      this.totalKeys += 1;
+    }
+    this.successArray.forEach((line) => {
+      line.join("");
+    })
+    this.success = [].concat.apply([], this.successArray);
+    this.characters = [].concat.apply([], this.charsArray);
+
     this.capsLock = event.getModifierState("CapsLock");
-    this.accuracy = (this.successArray.length / this.totalKeys) * 100;
-    this.progress = (this.successArray.length / this.codeText.length) * 100;
+    this.accuracy = (this.success.length / this.totalKeys) * 100;
+    this.progress = (this.success.length / this.characters.length) * 100;
     if (this.progress === 100) {
       this.endTime();
     }
   }
 
     startGame() {
+      this.splitCode(this.javascriptCode[(this.level - 1)].text)
+      this.charsArray.forEach(() => {
+        this.successArray.push([])
+      });
       this.game = true;
       this.startButton = false;
+
       this.codeText = this.javascriptCode[0].text;
       this.splitCode(this.codeText);
       this.drawBoard();
     }
 
     splitCode(codeText) {
-      this.charsArray = codeText.split("");
-      this.displayArray = codeText.split("");
+      codeText.forEach((line) => {
+        this.charsArray.push(line.split(""));
+        this.displayArray.push(line.split(""));
+      })
+    }
+
+    reset() {
+      this.progress = 0;
+      this.failureStats = {};
+      this.successArray = [];
+      this.failureArray = [];
+      this.totalKeys = 0;
+      this.accuracy = 0;
+      this.roundTime = 0;
+      this.roundCPM = 0;
+      this.successCounter = 0;
     }
 
     nextLevel() {
-      switch(this.codeText) {
-        case this.javascriptCode[0].text: {
-          this.successArray = [];
-          this.successCounter = 0;
-          this.codeText = this.javascriptCode[1].text;
-          this.splitCode(this.codeText);
-          break;
-        }
-        case this.javascriptCode[1].text: {
-          this.successArray = [];
-          this.successCounter = 0;
-          this.codeText = this.javascriptCode[2].text;
-          this.splitCode(this.codeText);
-          break;
-        }
+      if (this.javascriptCode[this.level]) {
+        this.displayArray = [];
+        this.charsArray = [];
+        this.level += 1;
+        this.startGame();
       }
     }
 
