@@ -35,7 +35,9 @@ export class TypingTestComponent implements OnInit {
   sampleCode;
   currentLine: number = 0;
   failureStats: object = {};
-
+  success;
+  characters;
+  
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
@@ -51,7 +53,7 @@ export class TypingTestComponent implements OnInit {
     // });
     let level = {
       level: "1",
-      text: ["this is some text", "this is some other text"]
+      text: ["this is some text", "this is some other text", "this is just more text", "this is bonus text"]
     }
     this.javascriptCode.push(level);
     console.log(this.javascriptCode[0]['text']);
@@ -71,7 +73,7 @@ export class TypingTestComponent implements OnInit {
       let d = new Date();
       this.endStamp = d.getTime();
       this.roundTime = (this.endStamp - this.startStamp) / 1000;
-      this.roundCPM = (this.displayArray.length * 60) / this.roundTime;
+      this.roundCPM = (this.displayArray.join("").length * 60) / this.roundTime;
       this.failureArray.forEach((letter) => {
         var occurrences = this.failureArray.filter(function(val) {
           return val === letter;
@@ -86,20 +88,28 @@ export class TypingTestComponent implements OnInit {
   whatKey(event: KeyboardEvent) {
     this.startTime();
     this.inputtedKey = event.key;
-    this.totalKeys += 1;
-      if (this.charsArray[this.currentLine][this.successCounter] === this.inputtedKey) {
-        this.successArray[this.currentLine].push(this.charsArray[this.currentLine][this.successCounter]);
-        this.hightlightColor = "#a3e4a3";
-        this.successCounter += 1;
-      } else if ((this.charsArray[this.currentLine].length === this.successArray[this.currentLine].length) && (event.which === 13)) {
-        this.currentLine += 1;
-      } else {
-        this.failureArray.push(this.charsArray[this.successCounter])
-        this.hightlightColor = "#ff8787";
-      }
+    if (this.charsArray[this.currentLine][this.successCounter] === this.inputtedKey) {
+      this.successArray[this.currentLine].push(this.charsArray[this.currentLine][this.successCounter]);
+      this.hightlightColor = "#a3e4a3";
+      this.successCounter += 1;
+      this.totalKeys += 1;
+    } else if ((this.charsArray[this.currentLine].length === this.successArray[this.currentLine].length) && (event.which === 13)) {
+      this.currentLine += 1;
+      this.successCounter = 0;
+    } else if ((this.charsArray[this.currentLine].length !== this.successArray[this.currentLine].length) && (this.charsArray[this.currentLine][this.successCounter] !== this.inputtedKey)) {
+      this.failureArray.push(this.charsArray[this.currentLine][this.successCounter])
+      this.hightlightColor = "#ff8787";
+      this.totalKeys += 1;
+    }
+    this.successArray.forEach((line) => {
+      line.join("");
+    })
+    this.success = [].concat.apply([], this.successArray);
+    this.characters = [].concat.apply([], this.charsArray);
+    console.log(this.success);
     this.capsLock = event.getModifierState("CapsLock");
-    // this.accuracy = (this.successArray.length / this.totalKeys) * 100;
-    // this.progress = (this.successArray.length / this.codeText.length) * 100;
+    this.accuracy = (this.success.length / this.totalKeys) * 100;
+    this.progress = (this.success.length / this.characters.length) * 100;
     if (this.progress === 100) {
       this.endTime();
     }
