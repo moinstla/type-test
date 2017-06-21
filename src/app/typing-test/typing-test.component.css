@@ -13,6 +13,14 @@ span {
   width: 700px;
 }
 
+.enter:after {
+  content: "enter";
+  background-color: red;
+  color: white;
+  padding: 5px;
+  font-size: 10px;
+}
+
 .typing-text {
   font-size: 20px;
   display: block;

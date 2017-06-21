@@ -15,17 +15,24 @@
     </ul>
   </div>
   <div id="wrapper" class="well">
-    <div *ngFor="let char of displayArray; let index = index" class="letter">
-      <div *ngIf="index == successArray.length">
-        <span [ngStyle]="{'background-color':' '+hightlightColor}">{{char}}</span>
-      </div>
-      <div *ngIf="index !== successArray.length">
-        <span>{{char}}</span>
+    <div *ngFor="let line of displayArray; let lineIndex = index" [ngClass]="{'enter': (successArray[currentLine].length === charsArray[currentLine].length && lineIndex === currentLine)}">
+      <div *ngFor="let char of line; let index = index" class="letter">
+        <div *ngIf="currentLine === lineIndex">
+          <div *ngIf="index === successArray[currentLine].length">
+            <span [ngStyle]="{'background-color':' '+hightlightColor}">{{char}}</span>
+          </div>
+          <div *ngIf="index !== successArray[currentLine].length">
+            <span>{{char}}</span>
+          </div>
+        </div>
+        <div *ngIf="currentLine !== lineIndex">
+          <span>{{char}}</span>
+        </div>
       </div>
     </div>
   </div>
-  <a class="btn btn-success" (click)="nextLevel()">Next Level</a>
 </div>
+<a class="btn btn-success" (click)="nextLevel()">Next Level</a>
 <div id="caps-lock" *ngIf="capsLock">
   <h1>Caps-Lock is on!</h1>
 </div>
