@@ -49,6 +49,7 @@ export class TypingTestComponent implements OnInit {
   svg;
   success;
   characters;
+  pieSvg;
 
 
 
@@ -103,7 +104,6 @@ export class TypingTestComponent implements OnInit {
   }
 
 
-
   drawCircle(color) {
 
     this.d3.select("body").on("keydown", () => {
@@ -118,10 +118,14 @@ export class TypingTestComponent implements OnInit {
         .attr("stroke", color)
         .style('fill', "none");
 
+
     circle.transition("time")
-        .duration(6000)
-        .ease(this.d3.easeElasticIn )
-        .attr("cx", Math.random() * this.progress * 10);
+        .duration(9000)
+        .ease(this.d3.easeBounceIn)
+        .attr("cx", Math.random() * this.progress * 10)
+        .transition()
+        .attr("transform", "scale(10)")
+
 
 
     circle.transition()
@@ -129,12 +133,10 @@ export class TypingTestComponent implements OnInit {
         .ease(this.d3.easeBounceOut)
         .attr("r", 3.5)
         .attr("stroke-opacity", 1)
-      // .transition()
-      //   .delay(5000 - 750 * 2)
-      //   .ease(this.d3.easeCubicIn)
-      //   .attr("r", 80)
-      //   .attr("stroke-opacity", 0)
-      //   .remove();
+        // .attr("transform", "scale(23)")
+
+
+
     });
   }
 
@@ -238,6 +240,7 @@ export class TypingTestComponent implements OnInit {
     }
 
     reset() {
+      this.pieSvg.transition().remove();
       this.progress = 0;
       this.failureStats = {};
       this.successArray = [];
@@ -274,6 +277,7 @@ export class TypingTestComponent implements OnInit {
     }
 
     buildPieChart(success, failure) {
+
     let goodInput: any[] = [];
     let legendRectSize = 18,
     legendSpacing = 4;
@@ -300,13 +304,13 @@ export class TypingTestComponent implements OnInit {
     donutWidth = 75;
 
 
+
     let color = this.d3.scaleOrdinal(['#a1ef8f', '#f57187'])
     .range(['#a1ef8f', "#f57187"]);
-    // let color = this.d3.scaleOrdinal()
 
 
 
-    let pieSvg = this.d3.select('.pie-chart')
+     this.pieSvg = this.d3.select('.pie-chart')
     .append('svg')
     .attr('width', pieWidth)
     .attr('height', pieHeight)
@@ -321,8 +325,7 @@ export class TypingTestComponent implements OnInit {
     .value(d => d.count)
     .sort(null);
 
-    let d = '#a1ef8f';
-    let i = '#f57187';
+
     let path = pieSvg.selectAll('path')
     .data(pie(dataset))
     .enter()
@@ -330,12 +333,5 @@ export class TypingTestComponent implements OnInit {
     .attr('d', <any>arc)
     .attr('fill', (d, i) => color(((<any>d.data).label)))
 
-
-
-
   };
-
-
-
-
 }
