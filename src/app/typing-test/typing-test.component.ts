@@ -18,7 +18,6 @@ export class TypingTestComponent implements OnInit {
   game: boolean = false;
   startJavascriptButton: boolean = true;
   startRubyButton: boolean = true;
-  startButton;
   nextLevelJavascriptButton: boolean = true;
   nextLevelRubyButton: boolean = true;
   codeText: string;
@@ -301,9 +300,9 @@ export class TypingTestComponent implements OnInit {
     donutWidth = 75;
 
 
-    let color = this.d3.scaleOrdinal(this.d3.schemeCategory20b);
+    let color = this.d3.scaleOrdinal(['#a1ef8f', '#f57187'])
+    .range(['#a1ef8f', "#f57187"]);
     // let color = this.d3.scaleOrdinal()
-    // .range(["#FF0000", "#008000"]);
 
 
 
@@ -314,10 +313,6 @@ export class TypingTestComponent implements OnInit {
     .append('g')
     .attr('transform', 'translate(' + (pieWidth / 2) +  ',' + (pieHeight / 2) + ')');
 
-
-
-
-
     let arc = this.d3.arc()
     .innerRadius(pieRadius - donutWidth)
     .outerRadius(pieRadius);
@@ -326,36 +321,16 @@ export class TypingTestComponent implements OnInit {
     .value(d => d.count)
     .sort(null);
 
+    let d = '#a1ef8f';
+    let i = '#f57187';
     let path = pieSvg.selectAll('path')
     .data(pie(dataset))
     .enter()
     .append('path')
     .attr('d', <any>arc)
-    .attr('fill', (d, i) => color(((<any>d.data).label)));
+    .attr('fill', (d, i) => color(((<any>d.data).label)))
 
-    let legend = pieSvg.selectAll('.legend')
-    .data(color.domain())
-    .enter()
-    .append('g')
-    .attr('class', 'legend')
-    .attr('transform', function(d, i) {
-      var height = legendRectSize + legendSpacing;
-      var offset =  height * color.domain().length / 2;
-      var horz = -2 * legendRectSize;
-      var vert = i * height - offset;
-      return 'translate(' + horz + ',' + vert + ')';
-    });
 
-    legend.append('rect')
-    .attr('width', legendRectSize)
-    .attr('height', legendRectSize)
-    .style('fill', color)
-    .style('stroke', color);
-
-    legend.append('text')
-    .attr('x', legendRectSize + legendSpacing)
-    .attr('y', legendRectSize - legendSpacing)
-    .text(function(d) { return d; });
 
 
   };
