@@ -37,7 +37,6 @@ export class TypingTestComponent implements OnInit {
   javascript = [];
   ruby = [];
   sampleCode;
-  failureStats;
   g;
   svg;
   currentLine: number = 0;
@@ -153,28 +152,19 @@ export class TypingTestComponent implements OnInit {
   whatKey(event: KeyboardEvent) {
     this.startTime();
     this.inputtedKey = event.key;
-    this.totalKeys += 1;
-      if (this.charsArray[this.successCounter] === this.inputtedKey) {
-        this.successArray.push(this.charsArray[this.successCounter]);
-        this.hightlightColor = "#a3e4a3";
-        this.successCounter += 1;
-        this.drawCircle("green");
-      } else {
-        this.failureArray.push(this.charsArray[this.successCounter])
-        this.hightlightColor = "#ff8787";
-        this.drawCircle("red");
-      }
 
     if (this.charsArray[this.currentLine][this.successCounter] === this.inputtedKey) {
       this.successArray[this.currentLine].push(this.charsArray[this.currentLine][this.successCounter]);
       this.hightlightColor = "#a3e4a3";
       this.successCounter += 1;
       this.totalKeys += 1;
+      this.drawCircle("green");
     } else if ((this.charsArray[this.currentLine].length === this.successArray[this.currentLine].length) && (event.which === 13)) {
       this.currentLine += 1;
       this.successCounter = 0;
     } else if ((this.charsArray[this.currentLine].length !== this.successArray[this.currentLine].length) && (this.charsArray[this.currentLine][this.successCounter] !== this.inputtedKey)) {
       this.failureArray.push(this.charsArray[this.currentLine][this.successCounter])
+      this.drawCircle("red");
       this.hightlightColor = "#ff8787";
       this.totalKeys += 1;
     }
@@ -183,7 +173,6 @@ export class TypingTestComponent implements OnInit {
     })
     this.success = [].concat.apply([], this.successArray);
     this.characters = [].concat.apply([], this.charsArray);
-
     this.capsLock = event.getModifierState("CapsLock");
     this.accuracy = (this.success.length / this.totalKeys) * 100;
     this.progress = (this.success.length / this.characters.length) * 100;
@@ -200,6 +189,7 @@ export class TypingTestComponent implements OnInit {
       });
       this.game = true;
       this.startButton = false;
+      this.drawBoard();
     }
 
     startRuby() {
@@ -211,7 +201,7 @@ export class TypingTestComponent implements OnInit {
       this.game = true;
       this.startButton = false;
 
-      this.codeText = this.javascriptCode[0].text;
+      this.codeText = this.javascript[0].text;
       this.splitCode(this.codeText);
       this.drawBoard();
     }
