@@ -1,0 +1,27 @@
+.navbar {
+  margin: 50px 0 0 0;
+  background-color: #fff;
+  border-radius: 0px;
+  border: none;
+  height: 120px;
+}
+
+.navbar-right {
+  margin: 60px 20px 0 0;
+}
+
+.navbar a {
+  font-family: 'Varela Round', sans-serif;
+  font-size: 25px;
+  color: #4a4a4a;
+}
+
+#logo {
+  display: inline-block;
+  height: 120px;
+
+}
+
+#logo:hover {
+  cursor: pointer;
+}

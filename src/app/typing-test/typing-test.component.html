@@ -1,20 +1,24 @@
-<div class="typing-text">
+<div class="main">
   <div id="progress-bar">
     <div [style.width]="progress + '%'" id="bar-fill">
     </div>
   </div>
-  <div id="stats" *ngIf="progress === 100">
-    <h1>Accuracy: {{accuracy.toFixed(2)}}%</h1>
-    <h1>Time: {{roundTime.toFixed(2)}} seconds</h1>
-    <h1>Characters Per Minute: {{roundCPM.toFixed(0)}}</h1>
-    <ul>
-      <li *ngFor="let entry of failureStats | keys">
-        You missed the character <span class="failed-letter">{{entry.key}}</span> {{entry.value}} {{entry.amount}}
-      </li> 
-    </ul>
+  <div class="mac-bar">
+    <div id="buttons">
+      <div class="red"></div>
+      <div class="yellow"></div>
+      <div class="green"></div>
+    </div>
+  </div>
+  <div class="tab-bar">
+    <div class="tab">
+      <img src="assets/{{language}}.png">
+      {{language}} - level: {{level}}
+    </div>
   </div>
   <div id="wrapper" class="well">
-    <div *ngFor="let line of displayArray; let lineIndex = index" [ngClass]="{'enter': (successArray[currentLine].length === charsArray[currentLine].length && lineIndex === currentLine)}">
+    <div *ngFor="let line of displayArray; let lineIndex = index" [ngClass]="{'enter': (successArray[currentLine].length === charsArray[currentLine].length && lineIndex === currentLine)}" class="line" [style.content]='lineIndex'>
+      <span class=line-number>{{lineIndex + 1}}</span>
       <div *ngFor="let char of line; let index = index" class="letter">
         <div *ngIf="currentLine === lineIndex">
           <div *ngIf="index === successArray[currentLine].length">
@@ -29,15 +33,31 @@
         </div>
       </div>
     </div>
+    <div id="stats" *ngIf="levelComplete === true">
+      <h1>Results</h1>
+      <h3>Accuracy: {{accuracy.toFixed(2)}}%</h3>
+      <h3>Time: {{roundTime.toFixed(2)}} seconds</h3>
+      <h3>Characters Per Minute: {{roundCPM.toFixed(0)}}</h3>
+      <ul>
+        <li *ngFor="let entry of failureStats | keys">
+          You missed the character <span class="failed-letter">{{entry.key}}</span> {{entry.value}} {{entry.amount}}
+        </li> 
+      </ul>
+      <a *ngIf="language === 'javascript'" class="btn btn-success" (click)="nextLevelJavascript()">Next Level</a>
+      <a *ngIf="language === 'ruby'" class="btn btn-success" (click)="nextLevelRuby()">Next Level</a>
+    </div>
   </div>
   <button *ngIf="nextLevelJavascriptButton" (click)="nextLevelJavascript()" class="btn btn-info">Next Level</button>
   <button *ngIf="nextLevelRubyButton" (click)="nextLevelRuby()" class="btn btn-success">Next Level</button>
 </div>
-<a class="btn btn-success" (click)="nextLevel()">Next Level</a>
 <div id="caps-lock" *ngIf="capsLock">
   <h1>Caps-Lock is on!</h1>
 </div>
+
 <br>
 <button *ngIf="startJavascriptButton" (click)="startJavascript()" class="btn btn-primary">Type Javascript</button>
 
 <button *ngIf="startRubyButton" (click)="startRuby()" class="btn btn-danger">Type Ruby</button>
+
+<svg width="100%" height="200" id="circles"></svg>
+

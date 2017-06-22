@@ -1,7 +1,73 @@
 span {
+  font-family: 'Inconsolata', monospace;
+  font-weight: bold;
   display: inline-block;
   letter-spacing: 2px;
   white-space: pre;
+  font-size: 22px;
+  color: #a1ef8f;
+}
+
+#buttons {
+  padding: 2px 10px;
+}
+
+.red {
+  margin: 0 2px;
+  border-radius: 100%;
+  display: inline-block;
+  background-color: #fe615b;
+  height: 15px;
+  width: 15px;
+}
+
+.yellow {
+  margin: 0 2px;
+  border-radius: 100%;
+  display: inline-block;
+  background-color: #ffbc44;
+  height: 15px;
+  width: 15px;
+}
+
+.green {
+  margin: 0 2px;
+  border-radius: 100%;
+  display: inline-block;
+  background-color: #2fc84e;
+  height: 15px;
+  width: 15px;
+}
+
+
+.mac-bar {
+  border-radius: 5px 5px 0 0 ;
+  width: 100%;
+  background-color: #313440;
+  border-bottom: #17181d 1px solid;
+}
+
+.tab-bar {
+  width: 100%;
+  background-color: #282a31;
+  margin-bottom: 0;
+}
+
+.tab {
+  border-right: 1px #17181d solid;
+  font-size: 16px;
+  border-left: 1px #17181d solid;
+  font-family: 'Inconsolata', monospace;
+  border-radius: 5px 5px 0 0 ;
+  padding: 5px 20px 5px 10px;
+  color: #cacaca;
+  background-color: #313440;
+  display: inline-block;
+}
+
+.tab img {
+  margin-bottom: 2px;
+  height: 22px;
 }
 
 .letter {
@@ -9,21 +75,29 @@ span {
 }
 
 #wrapper {
-  margin: 30px auto 0 auto;
-  width: 700px;
+  border: none;
+  border-top: 1px #17181d solid;
+  border-radius: 0 0 10px 10px;
+  background-color: #313440;
+  padding: 35px 20px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .enter:after {
-  content: "enter";
-  background-color: red;
-  color: white;
+  margin-bottom: 10px;
+  border-radius: 3px;
+  content: "⏎ Enter";
+  background-color: #7eb8e1;
+  color: #000;
   padding: 5px;
-  font-size: 10px;
+  font-size: 12px;
+  font-weight: bold;
 }
 
-.typing-text {
+.main {
+  margin: 75px 0 0 0;
   font-size: 20px;
-  display: block;
 }
 
 .failureHighlight {
@@ -40,19 +114,54 @@ span {
 }
 
 #progress-bar {
-  margin: 0 auto;
-  border: 1px solid #000;
-  width: 65%;
-  height: 25px;
+  margin-bottom: -5px;
+  width: 100%;
+  height: 15px;
 }
 
 #bar-fill {
   height: 100%;
+  border-radius: 8px 8px 0 0;
   background-color: #a3e4a3;
   width:50%;
 }
 
 .failed-letter {
-  color: red;
+  color: #7eb8e1;
   font-size: 22px;
+}
+
+.line-number {
+  font-weight: normal;
+  color: #696969;
+  margin-right: 10px;
+}
+
+circle {
+  fill: none;
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+
+#stats {
+  padding-left: 30px;
+  margin-top: 20px;
+  border-top: 2px solid #696969;
+  font-family: 'Inconsolata', monospace;
+  color: #f57187;
+}
+
+#stats .btn {
+  font-weight: bold;
+  background-color: #a1ef8f;
+  color: #333;
+}
+
+#stats ul {
+  padding: 0;
+  list-style: none;
+}
+
+#circles {
+  margin: 20px 0 0 0;
 }
