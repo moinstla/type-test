@@ -119,10 +119,15 @@ export class TypingTestComponent implements OnInit {
         .attr("stroke", color)
         .style('fill', "none");
 
+
+
     circle.transition("time")
-        .duration(6000)
-        .ease(this.d3.easeElasticIn )
-        .attr("cx", Math.random() * this.progress * 10);
+        .duration(9000)
+        .ease(this.d3.easeBounceIn)
+        .attr("cx", Math.random() * this.progress * 10)
+        .transition()
+        .attr("transform", "scale(10)")
+
 
 
     circle.transition()
@@ -130,12 +135,10 @@ export class TypingTestComponent implements OnInit {
         .ease(this.d3.easeBounceOut)
         .attr("r", 3.5)
         .attr("stroke-opacity", 1)
-      // .transition()
-      //   .delay(5000 - 750 * 2)
-      //   .ease(this.d3.easeCubicIn)
-      //   .attr("r", 80)
-      //   .attr("stroke-opacity", 0)
-      //   .remove();
+        // .attr("transform", "scale(23)")
+
+
+
     });
   }
 
@@ -301,9 +304,8 @@ export class TypingTestComponent implements OnInit {
     donutWidth = 75;
 
 
-    let color = this.d3.scaleOrdinal(this.d3.schemeCategory20b);
-    // let color = this.d3.scaleOrdinal()
-    // .range(["#FF0000", "#008000"]);
+    let color = this.d3.scaleOrdinal(["#013ADF", "#ACFA58"]);
+
 
 
 
@@ -331,7 +333,7 @@ export class TypingTestComponent implements OnInit {
     .enter()
     .append('path')
     .attr('d', <any>arc)
-    .attr('fill', (d, i) => color(((<any>d.data).label)));
+    .attr('fill', (d, i) => color(((d.data).label)));
 
     let legend = pieSvg.selectAll('.legend')
     .data(color.domain())
