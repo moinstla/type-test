@@ -14,7 +14,10 @@ import { D3Service, D3, Selection } from 'd3-ng2-service';
 
 export class TypingTestComponent implements OnInit {
   game: boolean = false;
-  startButton: boolean = true;
+  startJavascriptButton: boolean = true;
+  startRubyButton: boolean = true;
+  nextLevelJavascriptButton: boolean = true;
+  nextLevelRubyButton: boolean = true;
   codeText: string;
   level: number = 1;
   charsArray = [];
@@ -190,10 +193,12 @@ export class TypingTestComponent implements OnInit {
     console.log(this.progress);
     }
 
+
     startJavascript() {
       this.language = "javascript";
       this.levelComplete = false;
       this.splitCode(this.javascript[(this.level - 1)].text)
+
       this.charsArray.forEach(() => {
         this.successArray.push([])
       });
@@ -248,12 +253,15 @@ export class TypingTestComponent implements OnInit {
       }
     }
 
+    
+
     nextLevelRuby() {
       if (this.ruby[this.level]) {
         this.level += 1;
         console.log(this.level)
         this.reset()
         this.startRuby()
+
       }
     }
 

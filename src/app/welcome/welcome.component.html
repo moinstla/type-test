@@ -1,1 +1,9 @@
 <h1>Typing Test</h1>
+<br>
+<app-new-player></app-new-player>
+<br>
+<div *ngFor="let player of players | async" class="panel panel-default">
+  <div class="panel-body">
+    <h3 (click)="goToPlayerPage(player)">{{player.name}}</h3>
+  </div>
+</div>
