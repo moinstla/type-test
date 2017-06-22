@@ -1,7 +1,3 @@
-.well {
-  background-color: #313440;
-}
-
 span {
   font-family: 'Inconsolata', monospace;
   font-weight: bold;
@@ -12,16 +8,32 @@ span {
   color: #a1ef8f;
 }
 
+.tab {
+  font-family: 'Inconsolata', monospace;
+  margin-bottom: -8px;
+  border-radius: 5px 5px 0 0 ;
+  padding: 10px 20px 15px 20px;
+  color: #696969;
+  background-color: #313440;
+  display: inline-block;
+}
+
 .letter {
   display: inline-block;
 }
 
 #wrapper {
-  margin: 30px auto 0 auto;
+  border-radius: 10px;
+  border: none;
+  background-color: #313440;
+  padding: 35px 20px;
+  margin: 0 auto;
   width: 100%;
 }
 
 .enter:after {
+  margin-bottom: 10px;
+  border-radius: 3px;
   content: "⏎ Enter";
   background-color: #7eb8e1;
   color: #000;
@@ -30,9 +42,9 @@ span {
   font-weight: bold;
 }
 
-.typing-text {
+.main {
+  margin: 100px 0 0 0;
   font-size: 20px;
-  display: block;
 }
 
 .failureHighlight {
@@ -49,20 +61,22 @@ span {
 }
 
 #progress-bar {
-  margin: 0 auto;
-  border: 1px solid #000;
+  border-radius: 10px;
+  margin: 0 auto 30px auto;
+  border: 2px solid #333;
   width: 100%;
-  height: 25px;
+  height: 15px;
 }
 
 #bar-fill {
   height: 100%;
+  border-radius: 8px;
   background-color: #a3e4a3;
   width:50%;
 }
 
 .failed-letter {
-  color: red;
+  color: #a1ef8f;
   font-size: 22px;
 }
 
@@ -76,4 +90,27 @@ circle {
   fill: none;
   stroke: #000;
   stroke-width: 1.5px;
+}
+
+#stats {
+  padding-left: 30px;
+  margin-top: 20px;
+  border-top: 2px solid #696969;
+  font-family: 'Inconsolata', monospace;
+  color: #7eb8e1;
+}
+
+#stats .btn {
+  font-weight: bold;
+  background-color: #a1ef8f;
+  color: #333;
+}
+
+#stats ul {
+  padding: 0;
+  list-style: none;
+}
+
+#circles {
+  margin: 20px 0 0 0;
 }
