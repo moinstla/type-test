@@ -1,18 +1,22 @@
 import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
 import { SampleCode } from '../sample-code.model';
 import { DataService } from '../data.service';
+import { PlayerService } from '../player.service';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { ActivatedRoute, Params } from '@angular/router'
 import { D3Service, D3, Selection } from 'd3-ng2-service';
+import { Round } from '../round.model'
 
 
 @Component({
   selector: 'app-typing-test',
   templateUrl: './typing-test.component.html',
   styleUrls: ['./typing-test.component.css'],
-  providers: [DataService]
+  providers: [DataService, PlayerService]
 })
 
 export class TypingTestComponent implements OnInit {
+  playerID: string;
   game: boolean = false;
   startJavascriptButton: boolean = true;
   startRubyButton: boolean = true;
@@ -53,13 +57,13 @@ export class TypingTestComponent implements OnInit {
   private d3: D3;
   private parentNativeElement: any;
 
-  constructor(private dataService: DataService, element: ElementRef, d3Service: D3Service) {
+  constructor(private route: ActivatedRoute, private dataService: DataService, element: ElementRef, d3Service: D3Service, private playerService: PlayerService) {
     this.d3 = d3Service.getD3();
     this.parentNativeElement = element.nativeElement;
   }
 
   ngOnInit() {
-
+    this.playerID = this.route.params['_value']['id'];
     let d3 = this.d3;
     let d3ParentElement: Selection<any, any, any, any>;
 
@@ -149,6 +153,9 @@ export class TypingTestComponent implements OnInit {
         }).length;
         this.failureStats[letter] = occurrences;
       });
+      let newRound = new Round(this.playerID, this.language, this.level, this.roundTime, this.roundCPM, this.accuracy);
+      console.log(newRound)
+      this.playerService.addRound(newRound);
     }
   }
 
@@ -191,7 +198,6 @@ export class TypingTestComponent implements OnInit {
     if (this.progress === 100) {
       this.endTime();
     }
-    console.log(this.progress);
     }
 
 

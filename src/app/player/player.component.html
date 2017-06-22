@@ -1,15 +1,29 @@
 <div class="well">
   <div class="row">
-    <div class="col-md-4">
-  <h3> {{(playerToDisplay | async)?.name}}</h3>
+    <div class="col-md-6">
+  <h2> {{(playerToDisplay | async)?.name}}</h2>
   <br>
   <img src="{{(playerToDisplay | async)?.image}}">
   <br>
   <br>
   <h4><em>{{(playerToDisplay | async)?.bio}}</em></h4>
   </div>
-    <div class="col-md-8">
-</div>
+  <div class="col-md-6" *ngFor="let round of rounds | async | rounds:playerID:'javascript' | slice:0:1">
+    <h2>Latest Round Stats</h2>
+    <h6>Language: <span class="stats">{{round.language}}</span></h6>
+    <h6>Level: <span class="stats">{{round.level}}</span></h6>
+    <h6>Time: <span class="stats">{{round.time}} seconds</span></h6>
+    <h6>Characters Per Minute: <span class="stats">{{round.cpm.toFixed(0)}}</span></h6>
+    <h6>Accuracy: <span class="stats">{{round.accuracy.toFixed(0)}}%</span></h6>
+  </div>
+  <div class="col-md-6" *ngFor="let round of rounds | async | rounds:playerID:'ruby' | slice:0:1">
+    <h2>Latest Round Stats</h2>
+    <h6>Language: <span class="stats">{{round.language}}</span></h6>
+    <h6>Level: <span class="stats">{{round.level}}</span></h6>
+    <h6>Time: <span class="stats">{{round.time}} seconds</span></h6>
+    <h6>Characters Per Minute: <span class="stats">{{round.cpm.toFixed(0)}}</span></h6>
+    <h6>Accuracy: <span class="stats">{{round.accuracy.toFixed(0)}}%</span></h6>
+  </div>
 
 </div>
 <button class="btn btn-success" routerLink="type-test">Start Typing</button>
