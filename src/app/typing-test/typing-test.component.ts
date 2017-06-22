@@ -124,7 +124,8 @@ export class TypingTestComponent implements OnInit {
     circle.transition("time")
         .duration(9000)
         .ease(this.d3.easeBounceIn)
-        .attr("cx", Math.random() * this.progress * 10)
+        .attr("cx", Math.random() * 10)
+        .attr("cy", Math.random() * 100)
         .transition()
         .attr("transform", "scale(10)")
 
@@ -178,7 +179,7 @@ export class TypingTestComponent implements OnInit {
       this.hightlightColor = "#777777";
       this.successCounter += 1;
       this.totalKeys += 1;
-      this.drawCircle("green");
+      this.drawCircle("#a1ef8f");
     } else if ((this.charsArray[this.currentLine].length === this.successArray[this.currentLine].length) && (event.which === 13) && (this.progress !== 100)) {
       this.currentLine += 1;
       this.successCounter = 0;
@@ -188,7 +189,7 @@ export class TypingTestComponent implements OnInit {
       } else {
         this.failureArray.push(this.charsArray[this.currentLine][this.successCounter]);
       }
-      this.drawCircle("red");
+      this.drawCircle("#f57187");
       this.hightlightColor = "#d44545";
       this.totalKeys += 1;
     } else if (this.progress === 100 && event.which === 13) {
