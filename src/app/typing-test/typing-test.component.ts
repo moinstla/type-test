@@ -48,6 +48,7 @@ export class TypingTestComponent implements OnInit {
   svg;
   success;
   characters;
+  pieSvg;
 
 
 
@@ -96,7 +97,6 @@ export class TypingTestComponent implements OnInit {
   }
 
 
-
   drawCircle(color) {
 
     this.d3.select("body").on("keydown", () => {
@@ -110,7 +110,6 @@ export class TypingTestComponent implements OnInit {
         .attr("stroke-width", 3)
         .attr("stroke", color)
         .style('fill', "none");
-
 
 
     circle.transition("time")
@@ -237,6 +236,7 @@ export class TypingTestComponent implements OnInit {
     }
 
     reset() {
+      this.pieSvg.transition().remove();
       this.progress = 0;
       this.failureStats = {};
       this.successArray = [];
@@ -273,6 +273,7 @@ export class TypingTestComponent implements OnInit {
     }
 
     buildPieChart(success, failure) {
+
     let goodInput: any[] = [];
     let legendRectSize = 18,
     legendSpacing = 4;
@@ -302,18 +303,12 @@ export class TypingTestComponent implements OnInit {
     let color = this.d3.scaleOrdinal(["#013ADF", "#ACFA58"]);
 
 
-
-
-    let pieSvg = this.d3.select('.pie-chart')
+     this.pieSvg = this.d3.select('.pie-chart')
     .append('svg')
     .attr('width', pieWidth)
     .attr('height', pieHeight)
     .append('g')
     .attr('transform', 'translate(' + (pieWidth / 2) +  ',' + (pieHeight / 2) + ')');
-
-
-
-
 
     let arc = this.d3.arc()
     .innerRadius(pieRadius - donutWidth)
@@ -323,14 +318,15 @@ export class TypingTestComponent implements OnInit {
     .value(d => d.count)
     .sort(null);
 
-    let path = pieSvg.selectAll('path')
+    let path = this.pieSvg.selectAll('path')
     .data(pie(dataset))
     .enter()
     .append('path')
     .attr('d', <any>arc)
     .attr('fill', (d, i) => color(((d.data).label)));
 
-    let legend = pieSvg.selectAll('.legend')
+
+    let legend = this.pieSvg.selectAll('.legend')
     .data(color.domain())
     .enter()
     .append('g')
