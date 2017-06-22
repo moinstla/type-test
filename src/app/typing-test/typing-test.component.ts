@@ -6,7 +6,7 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 import { ActivatedRoute, Params } from '@angular/router'
 import { D3Service, D3, Selection } from 'd3-ng2-service';
 import { Round } from '../round.model'
-
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-typing-test',
@@ -52,6 +52,8 @@ export class TypingTestComponent implements OnInit {
   svg;
   success;
   characters;
+  pieSvg;
+
 
 
   private d3: D3;
@@ -64,9 +66,9 @@ export class TypingTestComponent implements OnInit {
 
   ngOnInit() {
     this.playerID = this.route.params['_value']['id'];
+    this.language = this.route.params['_value']['language'];
     let d3 = this.d3;
     let d3ParentElement: Selection<any, any, any, any>;
-
     if (this.parentNativeElement !== null) {
       d3ParentElement = d3.select(this.parentNativeElement);
       // Do d3 stuff
@@ -80,8 +82,14 @@ export class TypingTestComponent implements OnInit {
       this.sampleCode[1].forEach((level) => {
         this.ruby.push(level);
       });
-      this.startJavascript()
+      if (this.language === "javascript") {
+        this.startJavascript();
+      } else if (this.language === "ruby") {
+        this.startRuby();
+      }
     });
+    console.log(this.ruby);
+    console.log(this.javascript);
   }
 
   drawBoard() {
@@ -98,7 +106,6 @@ export class TypingTestComponent implements OnInit {
   }
 
 
-
   drawCircle(color) {
 
     this.d3.select("body").on("keydown", () => {
@@ -107,15 +114,20 @@ export class TypingTestComponent implements OnInit {
 
     let circle = this.g.append("circle")
         .attr("r", 50)
-        .attr("cy", Math.random() * 200)
-        .attr("cx", Math.random() * 600)
-        .attr("stroke", "black")
-        .style('fill', color);
+        .attr("cy", Math.random() * this.d3.event.keyCode * 10)
+        .attr("cx", Math.random() * this.d3.event.keyCode * 10)
+        .attr("stroke-width", 3)
+        .attr("stroke", color)
+        .style('fill', "none");
+
 
     circle.transition("time")
-        .duration(6000)
-        .ease(this.d3.easeElasticIn )
-        .attr("cx", Math.random() * this.progress * 10);
+        .duration(9000)
+        .ease(this.d3.easeBounceIn)
+        .attr("cx", Math.random() * this.progress * 10)
+        .transition()
+        .attr("transform", "scale(10)")
+
 
 
     circle.transition()
@@ -123,12 +135,10 @@ export class TypingTestComponent implements OnInit {
         .ease(this.d3.easeBounceOut)
         .attr("r", 3.5)
         .attr("stroke-opacity", 1)
-      // .transition()
-      //   .delay(5000 - 750 * 2)
-      //   .ease(this.d3.easeCubicIn)
-      //   .attr("r", 80)
-      //   .attr("stroke-opacity", 0)
-      //   .remove();
+        // .attr("transform", "scale(23)")
+
+
+
     });
   }
 
@@ -186,6 +196,7 @@ export class TypingTestComponent implements OnInit {
       this.charsArray.push([]);
       this.successArray.push([]);
       this.currentLine += 1;
+      this.buildPieChart(this.successArray, this.failureArray);
     }
     this.successArray.forEach((line) => {
       line.join("");
@@ -202,7 +213,6 @@ export class TypingTestComponent implements OnInit {
 
 
     startJavascript() {
-      this.language = "javascript";
       this.levelComplete = false;
       this.splitCode(this.javascript[(this.level - 1)].text)
 
@@ -215,7 +225,6 @@ export class TypingTestComponent implements OnInit {
     }
 
     startRuby() {
-      this.language = "ruby";
       this.levelComplete = false;
       this.splitCode(this.ruby[(this.level - 1)].text)
       this.charsArray.forEach(() => {
@@ -224,8 +233,7 @@ export class TypingTestComponent implements OnInit {
       this.game = true;
       this.startButton = false;
 
-      this.codeText = this.javascript[0].text;
-      this.splitCode(this.codeText);
+
       this.drawBoard();
     }
 
@@ -237,6 +245,7 @@ export class TypingTestComponent implements OnInit {
     }
 
     reset() {
+      this.pieSvg.transition().remove();
       this.progress = 0;
       this.failureStats = {};
       this.successArray = [];
@@ -272,5 +281,62 @@ export class TypingTestComponent implements OnInit {
       }
     }
 
+    buildPieChart(success, failure) {
 
+    let goodInput: any[] = [];
+    let legendRectSize = 18,
+    legendSpacing = 4;
+
+    success.forEach((array) => {
+      array.forEach((letter) => {
+        goodInput.push(letter);
+      });
+    });
+
+      interface Data {
+          label: string;
+          count: number;
+        }
+
+    let dataset: Data[] = [
+      { label: 'correctKey', count: goodInput.length },
+      { label: 'wrongKey', count: this.failureArray.length }
+    ];
+
+    let pieWidth = 360,
+    pieHeight = 360,
+    pieRadius = Math.min(pieWidth, pieHeight) / 2,
+    donutWidth = 75;
+
+
+
+    let color = this.d3.scaleOrdinal(['#a1ef8f', '#f57187'])
+    .range(['#a1ef8f', "#f57187"]);
+
+
+
+     this.pieSvg = this.d3.select('.pie-chart')
+    .append('svg')
+    .attr('width', pieWidth)
+    .attr('height', pieHeight)
+    .append('g')
+    .attr('transform', 'translate(' + (pieWidth / 2) +  ',' + (pieHeight / 2) + ')');
+
+    let arc = this.d3.arc()
+    .innerRadius(pieRadius - donutWidth)
+    .outerRadius(pieRadius);
+
+    let pie = this.d3.pie<Data>()
+    .value(d => d.count)
+    .sort(null);
+
+
+    let path = pieSvg.selectAll('path')
+    .data(pie(dataset))
+    .enter()
+    .append('path')
+    .attr('d', <any>arc)
+    .attr('fill', (d, i) => color(((<any>d.data).label)))
+
+  };
 }

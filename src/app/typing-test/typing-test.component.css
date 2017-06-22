@@ -144,6 +144,7 @@ circle {
 }
 
 #stats {
+  min-height: 500px;
   padding-left: 30px;
   margin-top: 20px;
   border-top: 2px solid #696969;
@@ -163,5 +164,68 @@ circle {
 }
 
 #circles {
-  margin: 20px 0 0 0;
+  margin-left: -100px;
+  margin-right: -100px;
+}
+
+.center-pie-chart {
+  margin: -500px 70px 0 0;
+  float: right;
+  z-index: +1;
+}
+
+.center-pie-chart text {
+  color: white;
+}
+
+#right-legend {
+  padding: 0 30px;
+}
+
+#wrong-legend {
+  padding: 0 30px;
+}
+
+#legend {
+  margin-left: -50px;
+  font-family: 'Inconsolata', monospace;
+  font-weight: bold;
+  display: inline-block;
+}
+
+#right-legend p {
+  margin-top: -10px;
+  line-height: 30px;
+  display: inline-block;
+  font-size: 20px;
+  color: #a1ef8f;
+}
+
+#wrong-legend p {
+  line-height: 30px;
+  display: inline-block;
+  font-size: 20px;
+  color: #f57187;
+}
+
+#wrong-legend p:before {
+  content: "---";
+  margin-right: 10px;
+  height: 30px;
+  width: 30px;
+  color: #f57187;
+  background-color: #f57187;
+}
+
+#right-legend p:before {
+  content: "---";
+  margin-right: 10px;
+  height: 30px;
+  width: 30px;
+  color: #a1ef8f;
+  background-color: #a1ef8f;
+}
+
+path:first-of-type {
+  fill: white;
 }

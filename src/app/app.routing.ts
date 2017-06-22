@@ -18,7 +18,7 @@ const appRoutes: Routes = [
     component: PlayerComponent
   },
   {
-    path: 'players/:id/type-test',
+    path: 'players/:id/:language',
     component: TypingTestComponent
   }
 ];
