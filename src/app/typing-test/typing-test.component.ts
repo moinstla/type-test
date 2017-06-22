@@ -3,7 +3,8 @@ import { SampleCode } from '../sample-code.model';
 import { DataService } from '../data.service';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { D3Service, D3, Selection } from 'd3-ng2-service';
-
+import { ActivatedRoute, Params } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-typing-test',
@@ -17,6 +18,7 @@ export class TypingTestComponent implements OnInit {
   game: boolean = false;
   startJavascriptButton: boolean = true;
   startRubyButton: boolean = true;
+  startButton;
   nextLevelJavascriptButton: boolean = true;
   nextLevelRubyButton: boolean = true;
   codeText: string;
@@ -54,13 +56,13 @@ export class TypingTestComponent implements OnInit {
   private d3: D3;
   private parentNativeElement: any;
 
-  constructor(private dataService: DataService, element: ElementRef, d3Service: D3Service) {
+  constructor(private route: ActivatedRoute, private location: Location, private dataService: DataService, element: ElementRef, d3Service: D3Service) {
     this.d3 = d3Service.getD3();
     this.parentNativeElement = element.nativeElement;
   }
 
   ngOnInit() {
-
+    this.language = this.route.params['_value']['language'];
 
     let d3 = this.d3;
     let d3ParentElement: Selection<any, any, any, any>;
@@ -78,8 +80,14 @@ export class TypingTestComponent implements OnInit {
       this.sampleCode[1].forEach((level) => {
         this.ruby.push(level);
       });
-      this.startJavascript()
+      if (this.language === "javascript") {
+        this.startJavascript();
+      } else if (this.language === "ruby") {
+        this.startRuby();
+      }
     });
+    console.log(this.ruby);
+    console.log(this.javascript);
   }
 
   drawBoard() {
@@ -199,7 +207,6 @@ export class TypingTestComponent implements OnInit {
 
 
     startJavascript() {
-      this.language = "javascript";
       this.levelComplete = false;
       this.splitCode(this.javascript[(this.level - 1)].text)
 
@@ -212,7 +219,6 @@ export class TypingTestComponent implements OnInit {
     }
 
     startRuby() {
-      this.language = "ruby";
       this.levelComplete = false;
       this.splitCode(this.ruby[(this.level - 1)].text)
       this.charsArray.forEach(() => {
@@ -221,8 +227,7 @@ export class TypingTestComponent implements OnInit {
       this.game = true;
       this.startButton = false;
 
-      this.codeText = this.javascript[0].text;
-      this.splitCode(this.codeText);
+
       this.drawBoard();
     }
 
