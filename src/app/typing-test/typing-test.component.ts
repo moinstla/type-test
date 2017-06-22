@@ -245,7 +245,7 @@ export class TypingTestComponent implements OnInit {
     }
 
     reset() {
-      this.pieSvg.transition().remove();
+      this.d3.select('.pie-chart').select('svg').remove();
       this.progress = 0;
       this.failureStats = {};
       this.successArray = [];
@@ -331,7 +331,7 @@ export class TypingTestComponent implements OnInit {
     .sort(null);
 
 
-    let path = pieSvg.selectAll('path')
+    let path = this.pieSvg.selectAll('path')
     .data(pie(dataset))
     .enter()
     .append('path')
