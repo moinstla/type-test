@@ -109,6 +109,8 @@ span {
 }
 
 #caps-lock {
+  font-family: 'Inconsolata', monospace;
+  color: #f57187;
   margin: 20px 0;
   color: red;
 }

@@ -9,16 +9,14 @@
   <h3><em>{{(playerToDisplay | async)?.bio}}</em></h3>
   </div>
   <div class="col-md-6" *ngFor="let round of rounds | async | rounds:playerID:'javascript' | slice:0:1">
-    <h2>Latest Round Stats</h2>
-    <h4>Language: <span class="stats">{{round.language}}</span></h4>
+    <h2>Latest {{round.language}} Stats</h2>
     <h4>Level: <span class="stats">{{round.level}}</span></h4>
     <h4>Time: <span class="stats">{{round.time}} seconds</span></h4>
     <h4>Characters Per Minute: <span class="stats">{{round.cpm.toFixed(0)}}</span></h4>
     <h4>Accuracy: <span class="stats">{{round.accuracy.toFixed(0)}}%</span></h4>
   </div>
   <div class="col-md-6" *ngFor="let round of rounds | async | rounds:playerID:'ruby' | slice:0:1">
-    <h2>Latest Round Stats</h2>
-    <h4>Language: <span class="stats">{{round.language}}</span></h4>
+    <h2>Latest {{round.language}} Stats</h2>
     <h4>Level: <span class="stats">{{round.level}}</span></h4>
     <h4>Time: <span class="stats">{{round.time}} seconds</span></h4>
     <h4>Characters Per Minute: <span class="stats">{{round.cpm.toFixed(0)}}</span></h4>
@@ -28,3 +26,4 @@
 </div>
 <button class="btn btn-warning" routerLink="javascript">Start Javascript</button>
 <button class="btn btn-danger" routerLink="ruby">Start Ruby</button>
+</div>

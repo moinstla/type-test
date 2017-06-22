@@ -1,19 +1,21 @@
-<button id="add-member" *ngIf="!addForm" (click)='showAddForm()'class="btn btn-info">New Player</button>
-<br>
-<div *ngIf="addForm">
-  <div class="panel-body">
+<div id="new-player">
+  <button id="add-member" *ngIf="!addForm" (click)='showAddForm()'class="btn btn-default">New Player</button>
+  <br>
+  <div *ngIf="addForm">
+    <div class="panel-body">
       <label>Name:</label>
       <br>
-      <input #newName>
+      <input #newName class="form-control">
       <br>
       <label>Image URL:</label>
       <br>
-      <input #newImage>
+      <input #newImage class="form-control">
       <br>
       <label>Bio:</label>
       <br>
-      <textarea #newBio></textarea>
-    <br>
-    <button class="btn btn-info"(click)='showAddForm()' (click)="submitForm(newName.value, newImage.value, newBio.value); newName.value=''; newImage.value=''; newBio.value='';">Add</button>
+      <textarea #newBio class="form-control"></textarea>
+      <br>
+      <button class="btn btn-info"(click)='showAddForm()' (click)="submitForm(newName.value, newImage.value, newBio.value); newName.value=''; newImage.value=''; newBio.value='';">Add</button>
+    </div>
   </div>
 </div>

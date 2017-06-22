@@ -8,5 +8,7 @@ img {
 }
 
 .well {
+  margin-top: 100px;
+  padding: 50px;
   font-family: 'Varela Round', sans-serif;
 }
