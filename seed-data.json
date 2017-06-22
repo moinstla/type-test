@@ -2,17 +2,17 @@
   "javascript": [
   {
   "level": "1",
-  "text": ["def surround(before, after, *items)","items.each { |x| print before, x, after}","end"]
+  "text": ["function myFunction(a, b) {", "return a * b;","}"]
   }, {
     "level": "2",
-    "text": "panAction.connect('gesture-cancel', Lang.bind(this, function() { clickAction.release(); for (let i = 0; i < this._workspacesViews.length; i++) this._workspacesViews[i].endSwipeScroll(); })); panAction.connect('gesture-end', Lang.bind(this, function() { clickAction.release(); for (let i = 0; i < this._workspacesViews.length; i++) this._workspacesViews[i].endSwipeScroll(); })); Main.overview.addAction(panAction); this.actor.bind_property('mapped', panAction, 'enabled', GObject.BindingFlags.SYNC_CREATE);"
+    "text": ["function power(base, exponent) {", "if (exponent == 0)","return 1;","else","return base * power(base, exponent - 1);","}"]
   }, {
     "level": "3",
-    "text": "_setReservedSlot: function(window) { for (let i = 0; i < this._workspaces.length; i++) this._workspaces[i].setReservedSlot(window); }, _syncFullGeometry: function() { for (let i = 0; i < this._workspaces.length; i++) this._workspaces[i].setFullGeometry(this._fullGeometry); }, _syncActualGeometry: function() { for (let i = 0; i < this._workspaces.length; i++) this._workspaces[i].setActualGeometry(this._actualGeometry); }, getActiveWorkspace: function() { let active = global.screen.get_active_workspace index(); return this._workspaces[active];}"
+    "text": ["function findSolution(target) {","function find(start, history) {","if (start == target)","return history;","else if (start > target)","return null;","else", "return find(start + 5, '(' + history + ' + 5)') ||","find(start * 3, '(' + history + ' * 3)');", "}", " return find(1, '1');","}"]
   }] ,
   "ruby": [
     { "level": "1",
-      "text": "def profile_allocations(name) GC.disable initial_size = ObjectSpace.count_objects yield changes = ObjectSpace.count_objects changes.each do |k, _| changes[k] -= initial_size[k] end puts '#{name} changes' changes.sort{|a,b| b[1] <=> a[1]}.each do |a,b| next if b <= 0 # 1 extra hash for trackingputs '#{a} #{a == :T_HASH ? b-1 : b}' end GC.enable end"
+      "text": ["def surround(before, after, *items)","items.each { |x| print before, x, after}","end"]
     }, {
       "level": "2",
       "text": "Benchmark.bmbm do |x| x.report('find') do 100.times{stuff} end end x.report('grab 10 users id') do 100.times{User.limit(10).select(:id).to_a} end x.report('grab 10 users') do 100.times{User.limit(10).to_a} end profile('topic query') do r = TopicQuery.new(u, {}).list_latest r.topics.to_a end"

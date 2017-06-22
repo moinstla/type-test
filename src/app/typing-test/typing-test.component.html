@@ -47,17 +47,14 @@
       <a *ngIf="language === 'ruby'" class="btn btn-success" (click)="nextLevelRuby()">Next Level</a>
     </div>
   </div>
-  <button *ngIf="nextLevelJavascriptButton" (click)="nextLevelJavascript()" class="btn btn-info">Next Level</button>
-  <button *ngIf="nextLevelRubyButton" (click)="nextLevelRuby()" class="btn btn-success">Next Level</button>
 </div>
 <div id="caps-lock" *ngIf="capsLock">
   <h1>Caps-Lock is on!</h1>
 </div>
 
 <br>
-<button *ngIf="startJavascriptButton" (click)="startJavascript()" class="btn btn-primary">Type Javascript</button>
+<!-- <button *ngIf="startJavascriptButton" (click)="startJavascript()" class="btn btn-primary">Type Javascript</button>
 
-<button *ngIf="startRubyButton" (click)="startRuby()" class="btn btn-danger">Type Ruby</button>
+<button *ngIf="startRubyButton" (click)="startRuby()" class="btn btn-danger">Type Ruby</button> -->
 
 <svg width="100%" height="200" id="circles"></svg>
-
