@@ -14,6 +14,7 @@ import { Location } from '@angular/common';
 })
 
 export class TypingTestComponent implements OnInit {
+  startButton;
   game: boolean = false;
   startJavascriptButton: boolean = true;
   startRubyButton: boolean = true;
@@ -51,6 +52,7 @@ export class TypingTestComponent implements OnInit {
   characters;
 
 
+
   private d3: D3;
   private parentNativeElement: any;
 
@@ -61,6 +63,7 @@ export class TypingTestComponent implements OnInit {
 
   ngOnInit() {
     this.language = this.route.params['_value']['language'];
+
     let d3 = this.d3;
     let d3ParentElement: Selection<any, any, any, any>;
 
@@ -110,10 +113,11 @@ export class TypingTestComponent implements OnInit {
 
     let circle = this.g.append("circle")
         .attr("r", 50)
-        .attr("cy", Math.random() * 200)
-        .attr("cx", Math.random() * 600)
-        .attr("stroke", "black")
-        .style('fill', color);
+        .attr("cy", Math.random() * this.d3.event.keyCode * 10)
+        .attr("cx", Math.random() * this.d3.event.keyCode * 10)
+        .attr("stroke-width", 3)
+        .attr("stroke", color)
+        .style('fill', "none");
 
     circle.transition("time")
         .duration(6000)
@@ -186,6 +190,7 @@ export class TypingTestComponent implements OnInit {
       this.charsArray.push([]);
       this.successArray.push([]);
       this.currentLine += 1;
+      this.buildPieChart(this.successArray, this.failureArray);
     }
     this.successArray.forEach((line) => {
       line.join("");
@@ -198,7 +203,6 @@ export class TypingTestComponent implements OnInit {
     if (this.progress === 100) {
       this.endTime();
     }
-    console.log(this.progress);
     }
 
 
@@ -269,6 +273,94 @@ export class TypingTestComponent implements OnInit {
 
       }
     }
+
+    buildPieChart(success, failure) {
+    let goodInput: any[] = [];
+    let legendRectSize = 18,
+    legendSpacing = 4;
+
+    success.forEach((array) => {
+      array.forEach((letter) => {
+        goodInput.push(letter);
+      });
+    });
+
+      interface Data {
+          label: string;
+          count: number;
+        }
+
+    let dataset: Data[] = [
+      { label: 'correctKey', count: goodInput.length },
+      { label: 'wrongKey', count: this.failureArray.length }
+    ];
+
+    let pieWidth = 360,
+    pieHeight = 360,
+    pieRadius = Math.min(pieWidth, pieHeight) / 2,
+    donutWidth = 75;
+
+
+    let color = this.d3.scaleOrdinal(this.d3.schemeCategory20b);
+    // let color = this.d3.scaleOrdinal()
+    // .range(["#FF0000", "#008000"]);
+
+
+
+    let pieSvg = this.d3.select('.pie-chart')
+    .append('svg')
+    .attr('width', pieWidth)
+    .attr('height', pieHeight)
+    .append('g')
+    .attr('transform', 'translate(' + (pieWidth / 2) +  ',' + (pieHeight / 2) + ')');
+
+
+
+
+
+    let arc = this.d3.arc()
+    .innerRadius(pieRadius - donutWidth)
+    .outerRadius(pieRadius);
+
+    let pie = this.d3.pie<Data>()
+    .value(d => d.count)
+    .sort(null);
+
+    let path = pieSvg.selectAll('path')
+    .data(pie(dataset))
+    .enter()
+    .append('path')
+    .attr('d', <any>arc)
+    .attr('fill', (d, i) => color(((<any>d.data).label)));
+
+    let legend = pieSvg.selectAll('.legend')
+    .data(color.domain())
+    .enter()
+    .append('g')
+    .attr('class', 'legend')
+    .attr('transform', function(d, i) {
+      var height = legendRectSize + legendSpacing;
+      var offset =  height * color.domain().length / 2;
+      var horz = -2 * legendRectSize;
+      var vert = i * height - offset;
+      return 'translate(' + horz + ',' + vert + ')';
+    });
+
+    legend.append('rect')
+    .attr('width', legendRectSize)
+    .attr('height', legendRectSize)
+    .style('fill', color)
+    .style('stroke', color);
+
+    legend.append('text')
+    .attr('x', legendRectSize + legendSpacing)
+    .attr('y', legendRectSize - legendSpacing)
+    .text(function(d) { return d; });
+
+
+  };
+
+
 
 
 }

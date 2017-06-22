@@ -163,5 +163,11 @@ circle {
 }
 
 #circles {
-  margin: 20px 0 0 0;
+  margin-left: -100px;
+  margin-right: -100px;
+}
+
+.center-pie-chart {
+  float: right;
+  z-index: +1;
 }
