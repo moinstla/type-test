@@ -1,10 +1,15 @@
 <div class="well">
+  <div class="row">
+    <div class="col-md-4">
   <h3> {{(playerToDisplay | async)?.name}}</h3>
   <br>
   <img src="{{(playerToDisplay | async)?.image}}">
   <br>
   <br>
   <h4><em>{{(playerToDisplay | async)?.bio}}</em></h4>
+  </div>
+    <div class="col-md-8">
 </div>
 
+</div>
 <button class="btn btn-success" routerLink="type-test">Start Typing</button>

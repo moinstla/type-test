@@ -16,6 +16,7 @@ export class TypingTestComponent implements OnInit {
   game: boolean = false;
   startJavascriptButton: boolean = true;
   startRubyButton: boolean = true;
+  startButton: boolean = true;
   nextLevelJavascriptButton: boolean = true;
   nextLevelRubyButton: boolean = true;
   codeText: string;
@@ -253,7 +254,7 @@ export class TypingTestComponent implements OnInit {
       }
     }
 
-    
+
 
     nextLevelRuby() {
       if (this.ruby[this.level]) {
