@@ -123,8 +123,8 @@ export class TypingTestComponent implements OnInit {
 
     circle.transition("time")
         .duration(9000)
-        .ease(this.d3.easeBounceIn)
-        .attr("cx", Math.random() * 10)
+        .ease(this.d3.easeElasticIn)
+        // .attr("cx", Math.random() * 10)
         .attr("cy", Math.random() * 100)
         .transition()
         .attr("transform", "scale(10)")
