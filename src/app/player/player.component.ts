@@ -14,7 +14,8 @@ import { FirebaseListObservable } from 'angularfire2/database';
 })
 export class PlayerComponent implements OnInit {
   players: FirebaseListObservable<any[]>;
-  playerId: string;
+  rounds: FirebaseListObservable<any[]>;
+  playerID: string;
   playerToDisplay;
 
   constructor(private route: ActivatedRoute, private location: Location, private playerService: PlayerService) {}
@@ -22,9 +23,10 @@ export class PlayerComponent implements OnInit {
 
   ngOnInit() {
     this.players = this.playerService.getPlayers();
+    this.rounds = this.playerService.getRounds();
     this.route.params.forEach((urlParameters) => {
-      this.playerId = urlParameters['id'];
+      this.playerID = urlParameters['id'];
     });
-      this.playerToDisplay = this.playerService.getPlayerById(this.playerId);
+      this.playerToDisplay = this.playerService.getPlayerByID(this.playerID);
   }
 }

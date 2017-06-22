@@ -1,23 +1,26 @@
 import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
 import { SampleCode } from '../sample-code.model';
 import { DataService } from '../data.service';
+import { PlayerService } from '../player.service';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { ActivatedRoute, Params } from '@angular/router'
 import { D3Service, D3, Selection } from 'd3-ng2-service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { Round } from '../round.model'
 import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-typing-test',
   templateUrl: './typing-test.component.html',
   styleUrls: ['./typing-test.component.css'],
-  providers: [DataService]
+  providers: [DataService, PlayerService]
 })
 
 export class TypingTestComponent implements OnInit {
-  startButton;
+  playerID: string;
   game: boolean = false;
   startJavascriptButton: boolean = true;
   startRubyButton: boolean = true;
+  startButton: boolean = true;
   nextLevelJavascriptButton: boolean = true;
   nextLevelRubyButton: boolean = true;
   codeText: string;
@@ -56,17 +59,16 @@ export class TypingTestComponent implements OnInit {
   private d3: D3;
   private parentNativeElement: any;
 
-  constructor(private route: ActivatedRoute, private location: Location, private dataService: DataService, element: ElementRef, d3Service: D3Service) {
+  constructor(private route: ActivatedRoute, private dataService: DataService, element: ElementRef, d3Service: D3Service, private playerService: PlayerService) {
     this.d3 = d3Service.getD3();
     this.parentNativeElement = element.nativeElement;
   }
 
   ngOnInit() {
+    this.playerID = this.route.params['_value']['id'];
     this.language = this.route.params['_value']['language'];
-
     let d3 = this.d3;
     let d3ParentElement: Selection<any, any, any, any>;
-
     if (this.parentNativeElement !== null) {
       d3ParentElement = d3.select(this.parentNativeElement);
       // Do d3 stuff
@@ -161,6 +163,9 @@ export class TypingTestComponent implements OnInit {
         }).length;
         this.failureStats[letter] = occurrences;
       });
+      let newRound = new Round(this.playerID, this.language, this.level, this.roundTime, this.roundCPM, this.accuracy);
+      console.log(newRound)
+      this.playerService.addRound(newRound);
     }
   }
 
