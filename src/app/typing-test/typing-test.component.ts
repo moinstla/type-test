@@ -18,7 +18,6 @@ export class TypingTestComponent implements OnInit {
   game: boolean = false;
   startJavascriptButton: boolean = true;
   startRubyButton: boolean = true;
-  startButton;
   nextLevelJavascriptButton: boolean = true;
   nextLevelRubyButton: boolean = true;
   codeText: string;
@@ -305,7 +304,10 @@ export class TypingTestComponent implements OnInit {
     donutWidth = 75;
 
 
-    let color = this.d3.scaleOrdinal(["#013ADF", "#ACFA58"]);
+
+    let color = this.d3.scaleOrdinal(['#a1ef8f', '#f57187'])
+    .range(['#a1ef8f', "#f57187"]);
+
 
 
      this.pieSvg = this.d3.select('.pie-chart')
@@ -323,42 +325,13 @@ export class TypingTestComponent implements OnInit {
     .value(d => d.count)
     .sort(null);
 
-    let path = this.pieSvg.selectAll('path')
+
+    let path = pieSvg.selectAll('path')
     .data(pie(dataset))
     .enter()
     .append('path')
     .attr('d', <any>arc)
-    .attr('fill', (d, i) => color(((d.data).label)));
-
-
-    let legend = this.pieSvg.selectAll('.legend')
-    .data(color.domain())
-    .enter()
-    .append('g')
-    .attr('class', 'legend')
-    .attr('transform', function(d, i) {
-      var height = legendRectSize + legendSpacing;
-      var offset =  height * color.domain().length / 2;
-      var horz = -2 * legendRectSize;
-      var vert = i * height - offset;
-      return 'translate(' + horz + ',' + vert + ')';
-    });
-
-    legend.append('rect')
-    .attr('width', legendRectSize)
-    .attr('height', legendRectSize)
-    .style('fill', color)
-    .style('stroke', color);
-
-    legend.append('text')
-    .attr('x', legendRectSize + legendSpacing)
-    .attr('y', legendRectSize - legendSpacing)
-    .text(function(d) { return d; });
-
+    .attr('fill', (d, i) => color(((<any>d.data).label)))
 
   };
-
-
-
-
 }

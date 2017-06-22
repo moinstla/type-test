@@ -57,13 +57,15 @@
 </div>
 
 <br>
-<!-- <button *ngIf="startJavascriptButton" (click)="startJavascript()" class="btn btn-primary">Type Javascript</button>
-
-<button *ngIf="startRubyButton" (click)="startRuby()" class="btn btn-danger">Type Ruby</button> -->
-
-<svg width="1000" height="200" id="circles"></svg>
-
-
 <div class="center-pie-chart">
+  <div *ngIf="levelComplete === true" id="legend">
+    <div id="right-legend">
+      <p>Correct Keys</p>
+    </div>
+    <div id="wrong-legend">
+      <p>Incorrect Keys</p>
+    </div>
+  </div>
   <div class="pie-chart"></div>
 </div>
+<svg width="1000" height="200" id="circles"></svg>
