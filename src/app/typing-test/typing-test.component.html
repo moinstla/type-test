@@ -3,8 +3,18 @@
     <div [style.width]="progress + '%'" id="bar-fill">
     </div>
   </div>
-  <div class="tab">
-    {{language}} - level: {{level}}
+  <div class="mac-bar">
+    <div id="buttons">
+      <div class="red"></div>
+      <div class="yellow"></div>
+      <div class="green"></div>
+    </div>
+  </div>
+  <div class="tab-bar">
+    <div class="tab">
+      <img src="assets/{{language}}.png">
+      {{language}} - level: {{level}}
+    </div>
   </div>
   <div id="wrapper" class="well">
     <div *ngFor="let line of displayArray; let lineIndex = index" [ngClass]="{'enter': (successArray[currentLine].length === charsArray[currentLine].length && lineIndex === currentLine)}" class="line" [style.content]='lineIndex'>

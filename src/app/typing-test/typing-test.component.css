@@ -4,18 +4,70 @@ span {
   display: inline-block;
   letter-spacing: 2px;
   white-space: pre;
-  font-size: 23px;
+  font-size: 22px;
   color: #a1ef8f;
 }
 
-.tab {
-  font-family: 'Inconsolata', monospace;
-  margin-bottom: -8px;
+#buttons {
+  padding: 2px 10px;
+}
+
+.red {
+  margin: 0 2px;
+  border-radius: 100%;
+  display: inline-block;
+  background-color: #fe615b;
+  height: 15px;
+  width: 15px;
+}
+
+.yellow {
+  margin: 0 2px;
+  border-radius: 100%;
+  display: inline-block;
+  background-color: #ffbc44;
+  height: 15px;
+  width: 15px;
+}
+
+.green {
+  margin: 0 2px;
+  border-radius: 100%;
+  display: inline-block;
+  background-color: #2fc84e;
+  height: 15px;
+  width: 15px;
+}
+
+
+.mac-bar {
   border-radius: 5px 5px 0 0 ;
-  padding: 10px 20px 15px 20px;
-  color: #696969;
+  width: 100%;
+  background-color: #313440;
+  border-bottom: #17181d 1px solid;
+}
+
+.tab-bar {
+  width: 100%;
+  background-color: #282a31;
+  margin-bottom: 0;
+}
+
+.tab {
+  border-right: 1px #17181d solid;
+  font-size: 16px;
+  border-left: 1px #17181d solid;
+  font-family: 'Inconsolata', monospace;
+  border-radius: 5px 5px 0 0 ;
+  padding: 5px 20px 5px 10px;
+  color: #cacaca;
   background-color: #313440;
   display: inline-block;
+}
+
+.tab img {
+  margin-bottom: 2px;
+  height: 22px;
 }
 
 .letter {
@@ -23,8 +75,9 @@ span {
 }
 
 #wrapper {
-  border-radius: 10px;
   border: none;
+  border-top: 1px #17181d solid;
+  border-radius: 0 0 10px 10px;
   background-color: #313440;
   padding: 35px 20px;
   margin: 0 auto;
@@ -76,7 +129,7 @@ span {
 }
 
 .failed-letter {
-  color: #a1ef8f;
+  color: #7eb8e1;
   font-size: 22px;
 }
 
@@ -97,7 +150,7 @@ circle {
   margin-top: 20px;
   border-top: 2px solid #696969;
   font-family: 'Inconsolata', monospace;
-  color: #7eb8e1;
+  color: #f57187;
 }
 
 #stats .btn {
