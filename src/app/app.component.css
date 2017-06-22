@@ -25,3 +25,7 @@
 #logo:hover {
   cursor: pointer;
 }
+
+#header {
+  margin-bottom: 50px;
+}
