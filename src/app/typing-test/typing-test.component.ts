@@ -22,7 +22,7 @@ export class TypingTestComponent implements OnInit {
   displayArray = [];
   inputtedKey: string;
   successArray = [];
-  hightlightColor: string = "#a3e4a3";
+  hightlightColor: string = "#777777";
   failureArray: string[] = [];
   totalKeys: number = 0;
   accuracy: number = 100;
@@ -34,13 +34,14 @@ export class TypingTestComponent implements OnInit {
   timerStatus: boolean = false;
   roundTime: number;
   roundCPM: number;
+  levelComplete: boolean = false;
   javascript = [];
   ruby = [];
+  currentLine: number = 0;
+  failureStats: object = {};
   sampleCode;
   g;
   svg;
-  currentLine: number = 0;
-  failureStats: object = {};
   success;
   characters;
 
@@ -144,29 +145,36 @@ export class TypingTestComponent implements OnInit {
         }).length;
         this.failureStats[letter] = occurrences;
       });
-      console.log(this.failureStats);
     }
   }
 
   @HostListener('document:keypress', ['$event'])
   whatKey(event: KeyboardEvent) {
     this.startTime();
-    this.inputtedKey = event.key;
-
+    this.inputtedKey = event.key
     if (this.charsArray[this.currentLine][this.successCounter] === this.inputtedKey) {
       this.successArray[this.currentLine].push(this.charsArray[this.currentLine][this.successCounter]);
-      this.hightlightColor = "#a3e4a3";
+      this.hightlightColor = "#777777";
       this.successCounter += 1;
       this.totalKeys += 1;
       this.drawCircle("green");
-    } else if ((this.charsArray[this.currentLine].length === this.successArray[this.currentLine].length) && (event.which === 13)) {
+    } else if ((this.charsArray[this.currentLine].length === this.successArray[this.currentLine].length) && (event.which === 13) && (this.progress !== 100)) {
       this.currentLine += 1;
       this.successCounter = 0;
     } else if ((this.charsArray[this.currentLine].length !== this.successArray[this.currentLine].length) && (this.charsArray[this.currentLine][this.successCounter] !== this.inputtedKey)) {
-      this.failureArray.push(this.charsArray[this.currentLine][this.successCounter])
+      if (this.charsArray[this.currentLine][this.successCounter] === " ") {
+        this.failureArray.push("Space");
+      } else {
+        this.failureArray.push(this.charsArray[this.currentLine][this.successCounter]);
+      }
       this.drawCircle("red");
-      this.hightlightColor = "#ff8787";
+      this.hightlightColor = "#d44545";
       this.totalKeys += 1;
+    } else if (this.progress === 100 && event.which === 13) {
+      this.levelComplete = true;
+      this.charsArray.push([]);
+      this.successArray.push([]);
+      this.currentLine += 1;
     }
     this.successArray.forEach((line) => {
       line.join("");
@@ -179,10 +187,12 @@ export class TypingTestComponent implements OnInit {
     if (this.progress === 100) {
       this.endTime();
     }
-  }
+    console.log(this.progress);
+    }
 
     startJavascript() {
       this.language = "javascript";
+      this.levelComplete = false;
       this.splitCode(this.javascript[(this.level - 1)].text)
       this.charsArray.forEach(() => {
         this.successArray.push([])
@@ -194,6 +204,7 @@ export class TypingTestComponent implements OnInit {
 
     startRuby() {
       this.language = "ruby";
+      this.levelComplete = false;
       this.splitCode(this.ruby[(this.level - 1)].text)
       this.charsArray.forEach(() => {
         this.successArray.push([])

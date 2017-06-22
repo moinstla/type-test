@@ -36,6 +36,7 @@
     "@types/jquery": "^3.2.2",
     "@types/node": "~6.0.60",
     "codelyzer": "~2.0.0",
+    "d3-ng2-service": "^1.15.0",
     "jasmine-core": "~2.5.2",
     "jasmine-spec-reporter": "~3.2.0",
     "karma": "~1.4.1",
