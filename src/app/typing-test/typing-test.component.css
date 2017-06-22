@@ -1,7 +1,15 @@
+.well {
+  background-color: #313440;
+}
+
 span {
+  font-family: 'Inconsolata', monospace;
+  font-weight: bold;
   display: inline-block;
   letter-spacing: 2px;
   white-space: pre;
+  font-size: 23px;
+  color: #a1ef8f;
 }
 
 .letter {
@@ -14,11 +22,12 @@ span {
 }
 
 .enter:after {
-  content: "enter";
-  background-color: red;
-  color: white;
+  content: "⏎ Enter";
+  background-color: #7eb8e1;
+  color: #000;
   padding: 5px;
-  font-size: 10px;
+  font-size: 12px;
+  font-weight: bold;
 }
 
 .typing-text {
@@ -57,7 +66,11 @@ span {
   font-size: 22px;
 }
 
-
+.line-number {
+  font-weight: normal;
+  color: #696969;
+  margin-right: 10px;
+}
 
 circle {
   fill: none;

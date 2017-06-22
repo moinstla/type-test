@@ -1,18 +1,12 @@
-
-
-
 <svg width="700" height="250"></svg>
-
-
-
 <div class="typing-text">
-
   <div id="progress-bar">
     <div [style.width]="progress + '%'" id="bar-fill">
     </div>
   </div>
   <div id="wrapper" class="well">
-    <div *ngFor="let line of displayArray; let lineIndex = index" [ngClass]="{'enter': (successArray[currentLine].length === charsArray[currentLine].length && lineIndex === currentLine)}">
+    <div *ngFor="let line of displayArray; let lineIndex = index" [ngClass]="{'enter': (successArray[currentLine].length === charsArray[currentLine].length && lineIndex === currentLine)}" class="line" [style.content]='lineIndex'>
+      <span class=line-number>{{lineIndex + 1}}</span>
       <div *ngFor="let char of line; let index = index" class="letter">
         <div *ngIf="currentLine === lineIndex">
           <div *ngIf="index === successArray[currentLine].length">
@@ -32,7 +26,7 @@
 <div id="caps-lock" *ngIf="capsLock">
   <h1>Caps-Lock is on!</h1>
 </div>
-<div id="stats" *ngIf="progress === 100">
+<div id="stats" *ngIf="levelComplete === true">
   <h1>Accuracy: {{accuracy.toFixed(2)}}%</h1>
   <h1>Time: {{roundTime.toFixed(2)}} seconds</h1>
   <h1>Characters Per Minute: {{roundCPM.toFixed(0)}}</h1>
