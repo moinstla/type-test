@@ -27,6 +27,10 @@ Typetest is a typing game for programmers! Whether you are looking to type for f
 
 * Navigate to localhost:4200 in the browser
 
+## Live Site
+
+`live site at https://type-test-33c14.firebaseapp.com`
+
 ## Planned features
 
 * Leaderboards
