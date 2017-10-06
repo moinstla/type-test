@@ -29,7 +29,7 @@ Typetest is a typing game for programmers! Whether you are looking to type for f
 
 ## Live Site
 
-`live site at https://type-test-33c14.firebaseapp.com`
+`live site <a href="https://type-test-33c14.firebaseapp.com">here</a>`
 
 ## Planned features
 
